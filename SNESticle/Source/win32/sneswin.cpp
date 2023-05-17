@@ -6,6 +6,7 @@
 #include "types.h"
 #include "console.h"
 #include "dataio.h"
+#include "gzfileio.h"
 #include "sneswin.h"
 #include "winddraw.h"
 #include "windsound.h"
@@ -24,8 +25,8 @@ extern "C"
 #include "sncpu_c.h"
 #include "snspc_c.h"
 }
-static Char _SnesWin_ClassName[]="SNESticleClass";
-static Char _SnesWin_AppName[]="SNESticle";
+static char _SnesWin_ClassName[]="SNESticleClass";
+static char _SnesWin_AppName[]="SNESticle";
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -82,7 +83,7 @@ static Uint8 _ReadBytePPU(void *pUserData, Uint32 Addr)
 }
 
 
-static Bool _DumpMem(Char *pPath, ReadByteFuncPtrT pFunc, void *pUserData, Uint32 Addr, Uint32 EndAddr)
+static Bool _DumpMem(char *pPath, ReadByteFuncPtrT pFunc, void *pUserData, Uint32 Addr, Uint32 EndAddr)
 {
 	FILE *pFile;
 	pFile = fopen(pPath, "wb");
@@ -582,7 +583,7 @@ void CSnesWin::Process()
 void CSnesWin::ScreenShot()
 {
 	// write frame to file
-	Char Path[PATH_MAX];
+	char Path[PATH_MAX];
 
 	if (m_Rom.IsLoaded())
 	{
@@ -604,14 +605,11 @@ void CSnesWin::ScreenShot()
 	}
 }
 
-
-
-
 Bool CSnesWin::LoadRom(char* pFilePath)
 {
-	Char Path[PATH_MAX];
-	Char Ext[256];
-	Char Title[256];
+	char Path[PATH_MAX];
+	char Ext[256];
+	char Title[256];
 	Emu::Rom::LoadErrorE  eRomError;
 	CFileIO FileIO;
 
@@ -667,13 +665,13 @@ Bool CSnesWin::LoadRom(char* pFilePath)
 
 
 	LoadBRAM();
-
+#if SNES_DEBUG
 	CPath path;
 
 	path.SetPath(Path);
 	path.SetExt(".log");
 
-#if SNES_DEBUG
+
 	SnesDebugEnd();
 	SnesDebugBegin(&m_Snes, path.GetPath());
 #endif
@@ -750,7 +748,7 @@ void CSnesWin::OpenRomDlg()
 
 void CSnesWin::DumpCPUMem()
 {
-	Char Path[PATH_MAX];
+	char Path[PATH_MAX];
 
 	PathResolve(Path, m_Name, m_DirDump, ".cpu.bin");
 
@@ -763,7 +761,7 @@ void CSnesWin::DumpCPUMem()
 
 void CSnesWin::DumpPPUMem()
 {
-	Char Path[PATH_MAX];
+	char Path[PATH_MAX];
 
 	PathResolve(Path, m_Name, m_DirDump, ".ppu.bin");
 
@@ -776,7 +774,7 @@ void CSnesWin::DumpPPUMem()
 
 void CSnesWin::DumpSPCMem()
 {
-	Char Path[PATH_MAX];
+	char Path[PATH_MAX];
 
 	PathResolve(Path, m_Name, m_DirDump, ".spc.bin");
 
@@ -791,7 +789,7 @@ void CSnesWin::SaveBRAM()
 {
 	if (m_Rom.IsLoaded() && m_Rom.GetSRAMBytes() > 0)
 	{
-		Char Path[PATH_MAX];
+		char Path[PATH_MAX];
 		Uint8 *pSRAM;
 
 		pSRAM = m_Snes.GetSRAM();
@@ -809,7 +807,7 @@ void CSnesWin::LoadBRAM()
 {
 	if (m_Rom.IsLoaded() && m_Rom.GetSRAMBytes() > 0)
 	{
-		Char Path[PATH_MAX];
+		char Path[PATH_MAX];
 		Uint8 *pSRAM;
 
 		pSRAM = m_Snes.GetSRAM();
@@ -823,13 +821,10 @@ void CSnesWin::LoadBRAM()
 	}
 }
 
-
-
-
 static Uint32 _DisasmCPU(FILE *pFile, SNCpuT *pCpu, Uint32 uAddr, Uint8 *pFlags)
 {
 	Uint8 Opcode[4];
-	Char Str[256];
+	char Str[256];
 	Int32 nBytes;
 	Int32 iByte;
 
@@ -863,7 +858,7 @@ static Uint32 _DisasmCPU(FILE *pFile, SNCpuT *pCpu, Uint32 uAddr, Uint8 *pFlags)
 void CSnesWin::DisasmCPUMemory()
 {
 	FILE *pFile;
-	Char Path[PATH_MAX];
+	char Path[PATH_MAX];
 
 	PathResolve(Path, m_Name, m_DirDump, ".cpu.asm");
 
@@ -892,7 +887,7 @@ void CSnesWin::DisasmCPUMemory()
 static Uint32 _DisasmSPC(FILE *pFile, SNSpcT *pCpu, Uint32 uAddr)
 {
 	Uint8 Opcode[4];
-	Char Str[256];
+	char Str[PATH_MAX];
 	Int32 nBytes;
 	Int32 iByte;
 
@@ -926,7 +921,7 @@ static Uint32 _DisasmSPC(FILE *pFile, SNSpcT *pCpu, Uint32 uAddr)
 void CSnesWin::DisasmSPCMemory()
 {
 	FILE *pFile;
-	Char Path[PATH_MAX];
+	char Path[PATH_MAX];
 
 	PathResolve(Path, m_Name, m_DirDump, ".spc.asm");
 
@@ -951,7 +946,7 @@ void CSnesWin::DisasmSPCMemory()
 
 void CSnesWin::SaveState()
 {
-	Char Path[PATH_MAX];
+	char Path[PATH_MAX];
 
 	if (m_Rom.IsLoaded())
 	{
@@ -968,7 +963,7 @@ void CSnesWin::SaveState()
 
 void CSnesWin::RestoreState()
 {
-	Char Path[PATH_MAX];
+	char Path[PATH_MAX];
 
 	if (m_Rom.IsLoaded())
 	{
@@ -1004,7 +999,7 @@ void CSnesWin::SoftReset()
 	}
 }
 
-void CSnesWin::SetName(Char *pName)
+void CSnesWin::SetName(char *pName)
 {
 	strcpy(m_Name, pName);
 }
@@ -1017,7 +1012,7 @@ void CSnesWin::OnDestroy()
 
 
 
-void CSnesWin::PathResolve(char *pOutPath, const Char *pFilePath, const Char *pDir, const Char *pExt)
+void CSnesWin::PathResolve(char *pOutPath, const char *pFilePath, const char *pDir, const char *pExt)
 {
 	CPath path;
 

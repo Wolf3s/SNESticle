@@ -5,8 +5,8 @@
 #include "console.h"
 #include "resource.h"
 
-static Char _TextView_ClassName[]="GepTextView";
-static Char _TextView_AppName[]="GepTextView";
+static char _TextView_ClassName[]="GepTextView";
+static char _TextView_AppName[]="GepTextView";
 
 
 CTextView::CTextView()
@@ -37,7 +37,7 @@ void CTextView::OnSize(Uint32 uWidth, Uint32 uHeight)
 	SetScrollRange();
 }
 
-void CTextView::SetFont(Char *pFaceName, Uint32 uPointSize)
+void CTextView::SetFont(char *pFaceName, Uint32 uPointSize)
 {
 	LOGFONT LogFont;
 	HDC hDC;

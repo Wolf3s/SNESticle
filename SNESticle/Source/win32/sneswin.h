@@ -28,17 +28,17 @@ class CSnesWin : public CGepWin
 	CWavFile		m_WavFile;
 //	CMixConvert		m_MixConvert;
 
-	Char			m_Name[256];
+	char			m_Name[256];
 
 	Uint32			m_uScreenShot;
 
 	SnesWinStateE	m_eState;
 
 
-	Char			m_DirScreenshot[256];
-	Char			m_DirRom[256];
-	Char			m_DirDump[256];
-	Char			m_DirState[256];
+	char			m_DirScreenshot[256];
+	char			m_DirRom[256];
+	char			m_DirDump[256];
+	char			m_DirState[256];
 
 	CInputDevice	*m_pDevice[SNESIO_DEVICE_NUM];
 
@@ -54,8 +54,8 @@ public:
 	CSnesWin();
 	~CSnesWin();
 
-	void SetName(Char *pName);
-	Char *GetName() {return m_Name;}
+	void SetName(char *pName);
+	char *GetName() {return m_Name;}
 
 	Bool LoadRom(char *pFilePath);
 	void FreeRom();

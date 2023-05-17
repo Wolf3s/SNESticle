@@ -18,12 +18,13 @@ CFileIO::CFileIO()
 	m_pFile = NULL;
 }
 
-Bool CFileIO::Open(const Char *pFilePath, const Char *pMode)
+Bool CFileIO::Open(const char *pFilePath, const char *pMode)
 {
 	Close();
 	m_pFile = fopen(pFilePath, pMode);
 	return m_pFile ? TRUE : FALSE;
 }
+
 size_t CFileIO::Read(void *pBuffer, Int32 nBytes)
 {
 	return m_pFile ? fread(pBuffer, 1, nBytes, m_pFile) : 0;

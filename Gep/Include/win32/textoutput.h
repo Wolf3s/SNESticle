@@ -40,10 +40,10 @@ public:
 	void SelectFont(Int32 iFont);
 	void SetTextColor(Uint32 TextColor);
 	void SetBGColor(Uint32 BGColor);
-	void Space(Float32 CharWidth);
-	void Print(Float32 CharWidth, Char *pStr, Int32 nChars);
-	void Printf(Float32 fCharWidth, Char *pFormat, ...);
-	void Print(Float32 fCharWidth, Char *pStr);
+	void Space(float CharWidth);
+	void Print(float CharWidth, char *pStr, Int32 nChars);
+	void Printf(float fCharWidth, char *pFormat, ...);
+	void Print(float fCharWidth, char *pStr);
 };
 
 

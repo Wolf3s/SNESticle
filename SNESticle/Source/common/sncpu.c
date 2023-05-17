@@ -564,7 +564,7 @@ void SNCPUIRQ(SNCpuT *pCpu)
 //
 //
 
-Int32 SNCPUDisassemble(SNCpuT *pCpu, Uint32 Addr, Char *pStr, Uint8 *pFlags)
+Int32 SNCPUDisassemble(SNCpuT *pCpu, Uint32 Addr, char *pStr, Uint8 *pFlags)
 {
 	Uint8 Opcode[4];
     Uint8 uFlags;
@@ -583,7 +583,7 @@ Int32 SNCPUDisassemble(SNCpuT *pCpu, Uint32 Addr, Char *pStr, Uint8 *pFlags)
 }
 
 
-void SNCPUDumpRegs(SNCpuT *pCpu, Char *pStr)
+void SNCPUDumpRegs(SNCpuT *pCpu, char *pStr)
 {
 	Uint8 rF = pCpu->Regs.rP;
 
@@ -681,7 +681,7 @@ Int32 SNCPUExecuteDebug(SNCpuT *pCpu)
 
     while (pCpu->Cycles > 0)
     {
-        Char str[64];
+        char str[64];
 
         // disassemble instruction
         SNCPUDisassemble(pCpu, pCpu->Regs.rPC, str, NULL);

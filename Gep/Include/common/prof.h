@@ -17,9 +17,9 @@ extern ProfLogEntryT *Prof_pLogEntry;
 
 
 
-//
-// profile section macros
-//
+/*
+** profile section macros
+*/
 
 #if PROF_ENABLED
 

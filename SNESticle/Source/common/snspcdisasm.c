@@ -481,7 +481,7 @@ static SNDSPCInstDefT _SNDSPC_InstDefs[]=
     {0x00, SNDSPC_INST_NONE, SNDSPC_OPERAND_NONE, SNDSPC_OPERAND_NONE }
 };
 
-static Char *_SNDSPC_pMnemonics[]=
+static char *_SNDSPC_pMnemonics[]=
 {
     ""   ,
 
@@ -617,7 +617,7 @@ static SNDSPCInstDefT *_SNDGetInstDef(Uint8 uOpcode)
 
 
 
-static void _SNDGetOperand(SNDOpStreamT *pOpStream, Char *strOperand, SNDSPCOperandE eOperand)
+static void _SNDGetOperand(SNDOpStreamT *pOpStream, char *strOperand, SNDSPCOperandE eOperand)
 {
 
     switch (eOperand)
@@ -703,7 +703,7 @@ static void _SNDGetOperand(SNDOpStreamT *pOpStream, Char *strOperand, SNDSPCOper
 }
 
 
-static void _SNDisasm(SNDOpStreamT *pOpStream, Char *pStr)
+static void _SNDisasm(SNDOpStreamT *pOpStream, char *pStr)
 {
     SNDSPCInstDefT *pInstDef;
     Uint8 uOpcode;
@@ -751,7 +751,7 @@ static void _SNDisasm(SNDOpStreamT *pOpStream, Char *pStr)
 
 
 
-Int32 SNSPCDisasm(Char *pStr, Uint8 *pOpcode, Uint32 PC)
+Int32 SNSPCDisasm(char *pStr, Uint8 *pOpcode, Uint32 PC)
 {
     SNDOpStreamT OpStream;
     

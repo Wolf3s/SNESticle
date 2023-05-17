@@ -12,7 +12,7 @@
 
 static CSnesWin *_pSnesWin= NULL;
 
-Char *_RomFile = NULL;
+char *_RomFile = NULL;
 //"c:/emu/snesrom/mario.smc"
 
 
@@ -54,7 +54,7 @@ Uint8 _KeyMap[]=
 };
 
 
-void ConPuts(ConE eCon, const char *pString)
+void ConPuts(enum ConE eCon, const char *pString)
 {
 	//	printf("%s\n", pString);
 	OutputDebugString(pString);

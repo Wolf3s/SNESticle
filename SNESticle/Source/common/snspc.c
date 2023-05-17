@@ -269,7 +269,7 @@ Int32 SNSPCGetCounter(SNSpcT *pCpu, Int32 iCounter)
 
 
 
-void SNSPCDumpRegs(SNSpcT *pCpu, Char *pStr)
+void SNSPCDumpRegs(SNSpcT *pCpu, char *pStr)
 {
 	Uint8 rF = pCpu->Regs.rPSW;
 
@@ -298,7 +298,7 @@ Int32 SNSPCExecuteDebug(SNSpcT *pCpu)
 	nTotalCycles = pCpu->Cycles;
 	while (nTotalCycles > 0)
 	{
-		Char str[64];
+		char str[64];
   
   		SNSPCDisasm(str, pCpu->Mem + pCpu->Regs.rPC, pCpu->Regs.rPC);
 		ConDebug("%06X: %s\n", pCpu->Regs.rPC, str);

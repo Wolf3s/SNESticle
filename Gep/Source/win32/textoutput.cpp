@@ -65,7 +65,7 @@ void CTextOutput::SetOffset(Int32 vx, Int32 vy)
 	m_OffsetY = vy;
 }
 
-void CTextOutput::Print(Float32 fCharWidth, Char *pStr, Int32 nChars)
+void CTextOutput::Print(float fCharWidth, char *pStr, Int32 nChars)
 {
 	m_Rect.left  = m_Rect.right;
 
@@ -77,7 +77,7 @@ void CTextOutput::Print(Float32 fCharWidth, Char *pStr, Int32 nChars)
 	}
 	else
 	{
-		m_Rect.right+= (Int32) (fCharWidth * (Float32)m_uCharWidth);
+		m_Rect.right+= (Int32) (fCharWidth * (float)m_uCharWidth);
 	}
 	ExtTextOut(m_hDC, m_Rect.left + m_OffsetX, m_Rect.top + m_OffsetY, ETO_OPAQUE, &m_Rect, pStr, nChars, NULL);
 }
@@ -87,10 +87,10 @@ void CTextOutput::ClearScreen()
 	ExtTextOut(m_hDC, 0, 0, ETO_OPAQUE, &m_ClientRect, NULL, 0, NULL);
 }
 
-void CTextOutput::Printf(Float32 fCharWidth, Char *pFormat, ...)
+void CTextOutput::Printf(float fCharWidth, char *pFormat, ...)
 {
 	va_list argptr;
-	Char str[256];
+	char str[256];
 	Int32 nChars;
 
 	va_start(argptr, pFormat);
@@ -100,12 +100,12 @@ void CTextOutput::Printf(Float32 fCharWidth, Char *pFormat, ...)
 	Print(fCharWidth, str, nChars);
 }
 
-void CTextOutput::Print(Float32 fCharWidth, Char *pStr)
+void CTextOutput::Print(float fCharWidth, char *pStr)
 {
-	Print(fCharWidth, pStr, strlen(pStr));
+	Print(fCharWidth, pStr, (Int32)strlen(pStr));
 }
 
-void CTextOutput::Space(Float32 fCharWidth)
+void CTextOutput::Space(float fCharWidth)
 {
 	Print(fCharWidth, "", 0);
 }

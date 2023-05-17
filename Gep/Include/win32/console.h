@@ -47,14 +47,14 @@ void ConInit();
 void ConShutdown();
 
 void ConPuts(enum ConE eCon, const char *pString);
-void ConPrint(const Char *pFormat, ...);
-void ConPrintf(const Char *pFormat, ...);
-void ConWarning(const Char *pFormat, ...);
-void ConError(const Char *pFormat, ...);
-void ConDebug(const Char *pFormat, ...);
-void ConRedirect(const Char *pFileName);
+void ConPrint(const char *pFormat, ...);
+void ConPrintf(const char *pFormat, ...);
+void ConWarning(const char *pFormat, ...);
+void ConError(const char *pFormat, ...);
+void ConDebug(const char *pFormat, ...);
+void ConRedirect(const char *pFileName);
 
-void ConStdin(Char *pStr);
+void ConStdin(char *pStr);
 
 #ifdef __cplusplus
 }

@@ -1,12 +1,19 @@
-
-
 #ifndef _FILE_H
 #define _FILE_H
 
-Bool FileReadMem(Char *pFilePath, void *pMem, Uint32 nBytes);
-Bool FileWriteMem(Char *pFilePath, void *pMem, Uint32 nBytes);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-Bool FileExists(Char *pFilePath);
+Bool FileReadMem(char *pFilePath, void *pMem, size_t nBytes);
+Bool FileWriteMem(char *pFilePath, void *pMem, size_t nBytes);
+
+Bool FileExists(char *pFilePath);
+
+#ifdef __cplusplus 
+};
+#endif 
+
 
 #endif
 

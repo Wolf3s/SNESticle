@@ -90,7 +90,7 @@ Uint32 *SNPPUColorGetPalette()
 void SNPPUColorCalibrate(const SNPPUColorCalibT *pCalib)
 {
 	Uint32 uColor15;
-	Float32 fSin, fCos;
+	float fSin, fCos;
 
 	fCos = cosf(pCalib->fIQAngle * pi / 180.0f);
 	fSin = sinf(pCalib->fIQAngle * pi / 180.0f);
@@ -100,16 +100,16 @@ void SNPPUColorCalibrate(const SNPPUColorCalibT *pCalib)
 	{
 		Uint32 uColor32;
 		Uint32 uR, uG, uB;
-		Float32 fR, fG, fB;
+		float fR, fG, fB;
 		//		Float32 Y,I,Q;
 
 		uR = ((uColor15 >>  0) & 0x1F);
 		uG = ((uColor15 >>  5) & 0x1F);
 		uB = ((uColor15 >>  10) & 0x1F);
 
-		fR = ((Float32)uR) * (1.0f / 31.0f);
-		fG = ((Float32)uG) * (1.0f / 31.0f);
-		fB = ((Float32)uB) * (1.0f / 31.0f);
+		fR = ((float)uR) * (1.0f / 31.0f);
+		fG = ((float)uG) * (1.0f / 31.0f);
+		fB = ((float)uB) * (1.0f / 31.0f);
 
 		//
 		_SNPPUColorCalibrateColor(fR, fG, fB,  fSin, fCos, pCalib->fBrightness, pCalib->fMaxExcursion);

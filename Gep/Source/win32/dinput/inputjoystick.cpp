@@ -10,7 +10,7 @@ CInputJoystick::CInputJoystick(Uint32 uJoyID)
 	m_nButtons = INPUTJOY_BUTTON_NUM;
 }
 
-Uint8 CInputJoystick::DigitizeAxis(InputAxisE eAxis, Float32 fMin, Float32 fMax)
+Uint8 CInputJoystick::DigitizeAxis(InputAxisE eAxis, float fMin, float fMax)
 {
 	Int32 iMin, iMax;
 

@@ -57,9 +57,9 @@ public:
 
 	virtual char *GetString(StringE eString);
     virtual Uint32 GetSampleRate() {return 32000;}
-
-    static Char *GetRegName(Uint32 uAddr);
-
+#if SNES_DEBUG
+    static char *GetRegName(Uint32 uAddr);
+#endif
 
 private:
 	SNCpuT		m_Cpu;

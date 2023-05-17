@@ -92,7 +92,7 @@
     <ClCompile Include="..\..\Source\common\snspcrom.c">
       <Filter>Source Files\Snes\SPC700</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\common\snspctimer.cpp">
+    <ClCompile Include="..\..\Source\common\snspctimer.c">
       <Filter>Source Files\Snes\SPC700</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\common\sn9x\SPC700.CPP">

@@ -24,7 +24,7 @@ public:
 	~CTextView();
 
 	virtual void SetScrollRange();
-	void SetFont(Char *pFaceName, Uint32 uPointSize);
+	void SetFont(char *pFaceName, Uint32 uPointSize);
 };
 
 

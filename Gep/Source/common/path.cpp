@@ -32,14 +32,12 @@
 
 /*-- Public Implementation -----------------------------------------------------------------------*/
 
-
-
 //
 //
 //
 
 
-void PathGetFileName(Char *pName, const Char *pPath)
+void PathGetFileName(char *pName, const char *pPath)
 {
 	CPath path;
 
@@ -47,7 +45,7 @@ void PathGetFileName(Char *pName, const Char *pPath)
 	strcpy(pName, path.GetName());
 }
 
-void PathGetFileExt(Char *pExt, const Char *pPath)
+void PathGetFileExt(char *pExt, const char *pPath)
 {
 	CPath path;
 

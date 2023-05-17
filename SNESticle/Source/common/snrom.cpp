@@ -13,14 +13,14 @@
 
 struct SNRomCountryT
 {
-	Char		*pName;
+	char		*pName;
 	SNRomVideoE eVideoType;
 };
 
 struct SNRomLicenseT
 {
 	Uint8	uCode;
-	Char	*pName;
+	char	*pName;
 };
 
 
@@ -375,7 +375,7 @@ Uint32	SnesRom::GetNumRomRegions()
 	return 1;
 }
 
-Char   *SnesRom::GetRomRegionName(Uint32 eRegion)
+char   *SnesRom::GetRomRegionName(Uint32 eRegion)
 {
 	switch (eRegion)
 	{
@@ -399,12 +399,12 @@ Uint32 	SnesRom::GetRomRegionSize(Uint32 eRegion)
 
 
 
-Char   *SnesRom::GetRomTitle()
+char   *SnesRom::GetRomTitle()
 {
     SNRomInfoT *pInfo;
     pInfo = m_pCartInfo;
 	if (pInfo)
-		return (Char *)pInfo->Title;
+		return (char *)pInfo->Title;
 	return NULL;
 }
 
@@ -561,7 +561,7 @@ Uint32 SnesRom::GetNumExts()
 	return 2;
 }
 
-Char *SnesRom::GetExtName(Uint32 uExt)
+char *SnesRom::GetExtName(Uint32 uExt)
 {
 	switch (uExt)
 	{
@@ -575,7 +575,7 @@ Char *SnesRom::GetExtName(Uint32 uExt)
 }
 
 /* virtual */
-Char   *SnesRom::GetMapperName()
+char   *SnesRom::GetMapperName()
 {
 	return NULL;
 }

@@ -1,7 +1,10 @@
-
 #ifndef _PIXELFORMAT_H
 #define _PIXELFORMAT_H
 
+#ifdef __cplusplus
+extern "C" 
+{
+#endif
 
 // enum of some default pixel formats
 enum PixelFormatE
@@ -20,9 +23,9 @@ enum PixelFormatE
 };
 
 // struct representing pixel format 
-struct PixelFormatT
+typedef struct
 {
-	PixelFormatE	eFormat;
+	enum PixelFormatE	eFormat;
 
 	Uint8	bColorIndex;
 	Uint8	uBitDepth;
@@ -38,8 +41,12 @@ struct PixelFormatT
 
 	Uint8	uAlphaShift;
 	Uint8	uAlphaBits;
-};
+}PixelFormatT;
 
-PixelFormatT *PixelFormatGetByEnum(PixelFormatE eFormat);
+PixelFormatT *PixelFormatGetByEnum(enum PixelFormatE eFormat);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

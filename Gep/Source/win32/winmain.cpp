@@ -59,7 +59,11 @@ CGepWin *WinMainGetWin()
 	return _WinMain_pWin;
 }
 
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
+#ifdef OLD
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow)
+#else
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR szCmdLine, int iCmdShow)
+#endif
 {
 	INITCOMMONCONTROLSEX cc;
 	_WinMain_hInstance = hInstance;

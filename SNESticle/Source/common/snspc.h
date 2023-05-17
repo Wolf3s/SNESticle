@@ -77,7 +77,7 @@ void SNSPCSetTrapFunc(SNSpcT *pSpc, SNSpcReadTrapFuncT pReadTrap, SNSpcWriteTrap
 
 void SNSPCSetRomEnable(SNSpcT *pSpc, Bool bEnable);
 
-void SNSPCDumpRegs(SNSpcT *pCpu, Char *pStr);
+void SNSPCDumpRegs(SNSpcT *pCpu, char *pStr);
 void SNSPCSetDebug(Bool bDebug, Int32 nDebugCycles);
 
 static _INLINE Int32 SNSPCGetCounter(SNSpcT *pCpu, Int32 iCounter)

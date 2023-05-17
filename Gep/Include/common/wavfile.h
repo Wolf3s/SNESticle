@@ -45,7 +45,7 @@ public:
 	CWavFile();
 	virtual ~CWavFile();
 
-	Int32 Open(Char *pFileName, Uint32 uSampleRate, Uint32 nSampleBits, Uint32 nChannels);
+	Int32 Open(char *pFileName, Uint32 uSampleRate, Uint32 nSampleBits, Uint32 nChannels);
 	void Close();
 	Bool IsOpen() {return m_pFile ? TRUE : FALSE;}
 

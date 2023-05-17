@@ -81,7 +81,7 @@ void CWavFile::Close()
 }
 
 
-Int32 CWavFile::Open(Char *pFileName, Uint32 uSampleRate, Uint32 nSampleBits, Uint32 nChannels)
+Int32 CWavFile::Open(char *pFileName, Uint32 uSampleRate, Uint32 nSampleBits, Uint32 nChannels)
 {
 	WavFileHeaderT *pHeader = &m_Header;
 

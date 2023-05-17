@@ -2,7 +2,10 @@
 
 #ifndef _SNSPCTIMER_H
 #define _SNSPCTIMER_H
-
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 typedef struct SNSpcTimer_t
 {
@@ -22,5 +25,9 @@ void SNSpcTimerSetEnable(SNSpcTimerT *pTimer, Int32 nCycles, Bool bEnable);
 void SNSpcTimerSetTimer(SNSpcTimerT *pTimer, Uint8 uValue);
 void SNSpcTimerSync(SNSpcTimerT *pTimer, Int32 nCycles);
 Uint8 SNSpcTimerGetCounter(SNSpcTimerT *pTimer, Int32 nCycles);
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif

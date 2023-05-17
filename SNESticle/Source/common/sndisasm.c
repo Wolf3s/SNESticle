@@ -483,7 +483,7 @@ static SNDInstDefT _SND_InstDefs[]=
     {0x00, SND_INST_NONE, SND_OPERAND_NONE              }
 };
 
-static Char *_SND_pMnemonics[]=
+static char *_SND_pMnemonics[]=
 {
     ""   ,
     "adc", // SND_INST_ADC  
@@ -647,7 +647,7 @@ static SNDInstDefT *_SNDGetInstDef(Uint8 uOpcode)
 
 
 
-static void _SNDisasm(SNDOpStreamT *pOpStream, Char *pStr, Uint8 *pFlags)
+static void _SNDisasm(SNDOpStreamT *pOpStream, char *pStr, Uint8 *pFlags)
 {
     SNDInstDefT *pInstDef;
     Uint8 uOpcode;
@@ -802,7 +802,7 @@ static void _SNDisasm(SNDOpStreamT *pOpStream, Char *pStr, Uint8 *pFlags)
 
 
 
-Int32 SNDisasm(Char *pStr, Uint8 *pOpcode, Uint32 PC, Uint8 *pFlags)
+Int32 SNDisasm(char *pStr, Uint8 *pOpcode, Uint32 PC, Uint8 *pFlags)
 {
     SNDOpStreamT OpStream;
     

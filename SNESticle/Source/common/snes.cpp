@@ -1160,7 +1160,7 @@ char *SnesSystem::GetString(StringE eString)
 #if SNES_DEBUG
 
 /*static*/
-Char *SnesSystem::GetRegName(Uint32 uAddr)
+char *SnesSystem::GetRegName(Uint32 uAddr)
 {
     uAddr &= 0xFFFF;
 

@@ -117,9 +117,9 @@ Uint8 SNCPUPop8(SNCpuT *pCpu);
 Uint16 SNCPUPop16(SNCpuT *pCpu);
 Uint32 SNCPUPop24(SNCpuT *pCpu);
 
-Int32 SNCPUDisassemble(SNCpuT *pCpu, Uint32 Addr, Char *pStr, Uint8 *pFlags);
+Int32 SNCPUDisassemble(SNCpuT *pCpu, Uint32 Addr, char *pStr, Uint8 *pFlags);
 
-void SNCPUDumpRegs(SNCpuT *pCpu, Char *pStr);
+void SNCPUDumpRegs(SNCpuT *pCpu, char *pStr);
 
 //Int32 SNCPUGetCounter(SNCpuT *pCPU, Int32 iCounter);
 void SNCPUResetCounter(SNCpuT *pCPU, Int32 iCounter);

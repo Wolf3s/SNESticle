@@ -1,5 +1,3 @@
-
-//#include <windows.h>
 #include <stdio.h>
 #include <string.h>
 #include "types.h"
@@ -49,7 +47,7 @@ typedef struct tagRGBQUAD {
 } RGBQUAD;
 
 
-Bool BMPWriteFile(Char *pFileName, CSurface *pSurface, PaletteT *pPalette)
+Bool BMPWriteFile(char *pFileName, CSurface *pSurface, PaletteT *pPalette)
 {
 	FILE *pFile;
 	BITMAPFILEHEADER hdr;
@@ -134,20 +132,13 @@ Bool BMPWriteFile(Char *pFileName, CSurface *pSurface, PaletteT *pPalette)
 	return TRUE;
 }
 
-
-
-
-
-
-
-
-Bool BMPReadFile(Char *pFileName, CSurface *pSurface)
+Bool BMPReadFile(char *pFileName, CSurface *pSurface)
 {
 	FILE *pFile;
 	BITMAPFILEHEADER hdr;
 	BITMAPINFOHEADER info;
 	Int32 iLine;
-	PixelFormatE eFormat;
+	enum PixelFormatE eFormat;
 
 	// open file
 	pFile = fopen(pFileName, "rb");
@@ -224,17 +215,3 @@ Bool BMPReadFile(Char *pFileName, CSurface *pSurface)
 	fclose(pFile);
 	return TRUE;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

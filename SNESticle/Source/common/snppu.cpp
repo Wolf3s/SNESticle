@@ -698,7 +698,7 @@ SnesPPU::SnesPPU()
 
 #if SNES_DEBUG
 
-Char *SnesPPU::GetRegName(Uint32 uAddr)
+char *SnesPPU::GetRegName(Uint32 uAddr)
 {
     switch (uAddr)
     {

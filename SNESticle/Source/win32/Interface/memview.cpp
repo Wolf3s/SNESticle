@@ -45,7 +45,7 @@ void CMemView::OnPaint()
 		for (LineY=0; LineY < nScreenLines; LineY++)
 		{
 			Uint32 iByte;
-			Char ByteStr[64];
+			char ByteStr[64];
 
 			TextOut.BeginLine(LineY);
 

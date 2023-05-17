@@ -4,19 +4,23 @@
 #include "dataio.h"
 #include "gzfileio.h"
 
-
-
 CGZFileIO::CGZFileIO()
 {
 	m_pFile = NULL;
 }
 
-Bool CGZFileIO::Open(Char *pFilePath, Char *pMode)
+CGZFileIO::~CGZFileIO()
+{
+	Close();
+}
+
+Bool CGZFileIO::Open(char *pFilePath, char *pMode)
 {
 	Close();
 	m_pFile = gzopen(pFilePath, pMode);
 	return m_pFile ? TRUE : FALSE;
 }
+
 size_t CGZFileIO::Read(void *pBuffer, Int32 nBytes)
 {
 	return m_pFile ? gzread(m_pFile, pBuffer, nBytes) : 0;

@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\common\bmpfile.cpp" />
+    <ClCompile Include="..\..\Source\common\dataio.cpp" />
+    <ClCompile Include="..\..\Source\common\emumovie.cpp" />
+    <ClCompile Include="..\..\Source\common\emurom.cpp" />
+    <ClCompile Include="..\..\Source\common\emusys.cpp" />
+    <ClCompile Include="..\..\Source\common\gzfileio.cpp" />
+    <ClCompile Include="..\..\Source\common\inputdevice.cpp" />
+    <ClCompile Include="..\..\Source\common\memspace.cpp" />
+    <ClCompile Include="..\..\Source\common\mixbuffer.cpp" />
+    <ClCompile Include="..\..\Source\common\mixconvert.cpp" />
+    <ClCompile Include="..\..\Source\common\path.cpp" />
+    <ClCompile Include="..\..\Source\common\pixelformat.c" />
+    <ClCompile Include="..\..\Source\common\posixio.cpp" />
+    <ClCompile Include="..\..\Source\common\prof.c" />
+    <ClCompile Include="..\..\Source\common\proflog.c" />
+    <ClCompile Include="..\..\Source\common\surface.cpp" />
+    <ClCompile Include="..\..\Source\common\wavfile.cpp" />
+    <ClCompile Include="..\..\Source\win32\console.c" />
+    <ClCompile Include="..\..\Source\win32\ddraw\ddsurface.cpp" />
+    <ClCompile Include="..\..\Source\win32\ddraw\winddraw.cpp" />
+    <ClCompile Include="..\..\Source\win32\dinput\inputjoystick.cpp" />
+    <ClCompile Include="..\..\Source\win32\dinput\inputkeyboard.cpp" />
+    <ClCompile Include="..\..\Source\win32\dinput\inputmouse.cpp" />
+    <ClCompile Include="..\..\Source\win32\dsound\dsbuffer.cpp" />
+    <ClCompile Include="..\..\Source\win32\dsound\windsound.cpp" />
+    <ClCompile Include="..\..\Source\win32\file.c" />
+    <ClCompile Include="..\..\Source\win32\profctr.c" />
+    <ClCompile Include="..\..\Source\win32\rendersurface.cpp" />
+    <ClCompile Include="..\..\Source\win32\textoutput.cpp" />
+    <ClCompile Include="..\..\Source\win32\window.cpp" />
+    <ClCompile Include="..\..\Source\win32\winmain.cpp" />
+    <ClCompile Include="..\..\Source\win32\winprintf.c" />
+    <ClCompile Include="..\..\Include\common\zlib\adler32.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\compress.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\crc32.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\deflate.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\infblock.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\infcodes.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\inffast.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\inflate.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\inftrees.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\infutil.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\maketree.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\trees.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\uncompr.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\zlib\zutil.c">
+      <Filter>zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\unzip\explode.c">
+      <Filter>unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\unzip\unreduce.c">
+      <Filter>unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\unzip\unshrink.c">
+      <Filter>unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Include\common\unzip\unzip.c">
+      <Filter>unzip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SNESticle\Source\win32\mainloop.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Include\common\bmpfile.h" />
+    <ClInclude Include="..\..\Include\common\dataio.h" />
+    <ClInclude Include="..\..\Include\common\emuinput.h" />
+    <ClInclude Include="..\..\Include\common\emumovie.h" />
+    <ClInclude Include="..\..\Include\common\emurom.h" />
+    <ClInclude Include="..\..\Include\common\emusys.h" />
+    <ClInclude Include="..\..\Include\common\file.h" />
+    <ClInclude Include="..\..\Include\common\inputdevice.h" />
+    <ClInclude Include="..\..\Include\common\linebuffer.h" />
+    <ClInclude Include="..\..\Include\common\memspace.h" />
+    <ClInclude Include="..\..\Include\common\mixconvert.h" />
+    <ClInclude Include="..\..\Include\common\mixer.h" />
+    <ClInclude Include="..\..\Include\common\palette.h" />
+    <ClInclude Include="..\..\Include\common\path.h" />
+    <ClInclude Include="..\..\Include\common\pixelformat.h" />
+    <ClInclude Include="..\..\Include\common\posixio.h" />
+    <ClInclude Include="..\..\Include\common\prof.h" />
+    <ClInclude Include="..\..\Include\common\proflog.h" />
+    <ClInclude Include="..\..\Include\common\rendersurface.h" />
+    <ClInclude Include="..\..\Include\common\surface.h" />
+    <ClInclude Include="..\..\Include\common\wavfile.h" />
+    <ClInclude Include="..\..\Include\win32\ddsurface.h" />
+    <ClInclude Include="..\..\Include\win32\dsbuffer.h" />
+    <ClInclude Include="..\..\Include\win32\inputjoystick.h" />
+    <ClInclude Include="..\..\Include\win32\inputkeyboard.h" />
+    <ClInclude Include="..\..\Include\win32\inputmouse.h" />
+    <ClInclude Include="..\..\Include\win32\profctr.h" />
+    <ClInclude Include="..\..\Include\win32\textoutput.h" />
+    <ClInclude Include="..\..\Include\win32\winddraw.h" />
+    <ClInclude Include="..\..\Include\win32\window.h" />
+    <ClInclude Include="..\..\Include\win32\windsound.h" />
+    <ClInclude Include="..\..\Include\win32\winmain.h" />
+    <ClInclude Include="..\..\Include\win32\winprintf.h" />
+    <ClInclude Include="..\..\Source\common\emuthread.h" />
+    <ClInclude Include="..\..\Include\common\zlib\crc32.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\deflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\infblock.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\infcodes.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\inffast.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\inffixed.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\inflate.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\inftrees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\infutil.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\trees.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\zconf.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\zlib.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\zlib\zutil.h">
+      <Filter>zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\unzip\unz.h">
+      <Filter>unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\unzip\unzip.h">
+      <Filter>unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\unzip\unzipP.h">
+      <Filter>unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Include\common\unzip\zlib.h">
+      <Filter>unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SNESticle\Source\win32\mainloop.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="zlib">
+      <UniqueIdentifier>{2f0e84cb-9a93-489c-8ff8-a25a9b08b4da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="unzip">
+      <UniqueIdentifier>{76f45dc1-98a4-4000-b0bd-ea28af9f756d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Include\common\zlib\Makefile">
+      <Filter>zlib</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -149,7 +149,7 @@ LRESULT CGepWin::OnMessage(UINT iMsg, WPARAM wParam, LPARAM lParam)
 
 
 
-Bool CGepWin::RegisterClass(HINSTANCE hInstance, Char *pClassName, LPCSTR pMenuName)
+Bool CGepWin::RegisterClass(HINSTANCE hInstance, char *pClassName, LPCSTR pMenuName)
 {
 	WNDCLASS  WndClass;
 	anicur = LoadAnimatedCursor(111);
@@ -184,7 +184,7 @@ CGepWin::~CGepWin()
 
 }
 
-void CGepWin::Create(Char *pClassName, Char *pAppName, Uint32 uStyle, LPCSTR pMenuName)
+void CGepWin::Create(char *pClassName, char *pAppName, Uint32 uStyle, LPCSTR pMenuName)
 {
 	HINSTANCE hInstance = WinMainGetInstance();
 
@@ -223,7 +223,7 @@ void CGepWin::ShowWindow(int iCmdShow)
 	SetFocus(m_hWnd);
 }
 
-void CGepWin::SetTitle(Char *pTitle)
+void CGepWin::SetTitle(char *pTitle)
 {
 	SetWindowText(m_hWnd, pTitle);
 }
@@ -282,7 +282,7 @@ void CGepWin::DestroyStatusBar()
 	}
 }
 
-void CGepWin::SetStatusText(Int32 iPart, Char *pStr)
+void CGepWin::SetStatusText(Int32 iPart, char *pStr)
 {
 	if (m_hWndStatus)
 	{

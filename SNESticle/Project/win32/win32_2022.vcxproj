@@ -163,7 +163,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\..\Gep\Include\win32;..\..\..\Gep\Include\common;..\..\Source\common;..\..\source\win32;..\..\source\win32\resource;..\..\source\win32\interface;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Gep\Include\win32;..\..\..\Gep\Include\common\zlib;..\..\..\Gep\Include\common;..\..\source\win32;..\..\source\win32\resource;..\..\source\win32\interface;..\..\Source\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>PROF_ENABLED=0;CODE_PLATFORM=1;CODE_DEBUG=0;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
@@ -232,7 +232,7 @@
     <ClCompile Include="..\..\Source\common\snspcio.cpp" />
     <ClCompile Include="..\..\Source\common\snspcmix.cpp" />
     <ClCompile Include="..\..\Source\common\snspcrom.c" />
-    <ClCompile Include="..\..\Source\common\snspctimer.cpp" />
+    <ClCompile Include="..\..\Source\common\snspctimer.c" />
     <ClCompile Include="..\..\Source\common\snspc_c.c" />
     <ClCompile Include="..\..\Source\common\snstate.cpp" />
     <ClCompile Include="..\..\Source\win32\input.cpp" />

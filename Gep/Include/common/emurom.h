@@ -53,12 +53,12 @@ public:
     virtual void                Unload() = 0;
 
     virtual Uint32              GetNumExts() = 0;
-    virtual Char *              GetExtName(Uint32 uExt) = 0;
+    virtual char *              GetExtName(Uint32 uExt) = 0;
     virtual Uint32	            GetNumRomRegions() = 0;
-    virtual Char *              GetRomRegionName(Uint32 uRegion) = 0;
+    virtual char *              GetRomRegionName(Uint32 uRegion) = 0;
     virtual Uint32              GetRomRegionSize(Uint32 uRegion) = 0;
-    virtual Char *              GetMapperName() = 0;
-	virtual Char *              GetRomTitle() {return NULL;}
+    virtual char *              GetMapperName() = 0;
+	virtual char *              GetRomTitle() {return NULL;}
 protected:
     Bool		                m_bLoaded;
 };

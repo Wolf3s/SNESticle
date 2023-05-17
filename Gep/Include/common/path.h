@@ -22,7 +22,12 @@
 
 /*-- Preprocessor Definitions --------------------------------------------------------------------*/
 
-#define PATH_MAX		(256)
+#ifdef _MSC_VER
+#include <windows.h>
+#define PATH_MAX		(MAX_PATH) 
+#else
+#define PATH_MAX		(256) 
+#endif
 #define PATH_MAX_DRIVE	(32)
 #define PATH_MAX_DIR	(256)
 #define PATH_MAX_NAME	(256)
@@ -68,8 +73,8 @@ private:
 
 /*-- Functions -----------------------------------------------------------------------------------*/
 
-void PathGetFileName(Char *pName, const Char *pPath);
-void PathGetFileExt(Char *pExt, const Char *pPath);
+void PathGetFileName(char *pName, const char *pPath);
+void PathGetFileExt(char *pExt, const char *pPath);
 
 #endif // _path_h
 

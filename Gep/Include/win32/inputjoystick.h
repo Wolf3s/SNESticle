@@ -38,7 +38,7 @@ class CInputJoystick : public CInputDevice
 	Uint32 m_uJoyID;
 
 public:
-	Uint8 DigitizeAxis(InputAxisE eAxis, Float32 Min, Float32 Max);
+	Uint8 DigitizeAxis(InputAxisE eAxis, float Min, float Max);
 
 	CInputJoystick(Uint32 uJoyID);
 	virtual void Poll();

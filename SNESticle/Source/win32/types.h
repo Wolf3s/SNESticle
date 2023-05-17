@@ -40,10 +40,8 @@ typedef unsigned int		Uint32;
 typedef signed int			Int32;
 typedef unsigned __int64	Uint64;
 typedef signed __int64		Int64;
-typedef char				Char;
+
 typedef unsigned char		Bool;
-typedef float				Float32;
-typedef double				Float64;
 
 #define _ALIGN(__Align) 
 #define _INLINE _inline

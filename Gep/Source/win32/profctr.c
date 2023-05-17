@@ -39,5 +39,4 @@ Uint32 ProfCtrGetCounter1()
 	return 0;
 }
 
-//	__asm __emit 0fh __asm _emit 031h
-
+/*	__asm __emit 0fh __asm _emit 031h */

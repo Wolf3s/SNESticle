@@ -57,7 +57,7 @@ Uint32	Rom::GetNumRomRegions()
 	return 0;
 }
 
-Char   *Rom::GetRomRegionName(Uint32 eRegion)
+char   *Rom::GetRomRegionName(Uint32 eRegion)
 {
 	return NULL;
 }
@@ -72,7 +72,7 @@ Uint32 Rom::GetNumExts()
 	return 0;
 }
 
-Char *Rom::GetExtName(Uint32 uExt)
+char *Rom::GetExtName(Uint32 uExt)
 {
 	return NULL;
 }

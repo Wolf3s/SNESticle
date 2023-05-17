@@ -37,8 +37,8 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            SNESticle/release/*.exe
-            SNESticle/x64/Release/*.exe
+            Release/*.exe
+            x64/Release/*.exe
 #  build:
 #    runs-on: ubuntu-latest
 #    container: ps2dev/gskit:latest

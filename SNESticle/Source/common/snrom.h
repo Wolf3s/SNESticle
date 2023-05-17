@@ -118,12 +118,12 @@ public:
 	static SNRomHdrTypeE SNRomGetHdrType(SNRomHdrU *pRomHdr);
 
 	virtual Uint32  GetNumExts();
-	virtual Char    *GetExtName(Uint32 uExt);
+	virtual char    *GetExtName(Uint32 uExt);
 	virtual Uint32	GetNumRomRegions();
-	virtual Char   *GetRomRegionName(Uint32 uRegion);
+	virtual char   *GetRomRegionName(Uint32 uRegion);
 	virtual Uint32 	GetRomRegionSize(Uint32 uRegion);
-	virtual Char   *GetRomTitle();
-	virtual Char   *GetMapperName();
+	virtual char   *GetRomTitle();
+	virtual char   *GetMapperName();
 };
 
 

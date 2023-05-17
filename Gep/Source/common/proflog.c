@@ -11,7 +11,7 @@
 
 typedef struct ProfLogSection_t
 {
-	Char 	*pName;
+	char 	*pName;
 	Int32	nEntry;
 	Int32	Count[PROF_COUNTER_NUM];
 } ProfLogSectionT;
@@ -41,7 +41,7 @@ static Bool _ProfLogEntryEqual(ProfLogEntryT *pA, ProfLogEntryT *pB)
 	return !strcmp(pA->pName + 1, pB->pName + 1);
 }
 
-static ProfLogSectionT *_ProfLogAddSection(Char *pSectionName)
+static ProfLogSectionT *_ProfLogAddSection(char *pSectionName)
 {
 	Int32 iSection;
 	ProfLogSectionT *pSection = NULL;
@@ -72,7 +72,7 @@ static ProfLogSectionT *_ProfLogAddSection(Char *pSectionName)
 }
 
 
-static void _ProfLogSection(Bool bPrint, Int32 nTabs, Char *pSectionName, ProfLogEntryT *pBegin, ProfLogEntryT *pEnd)
+static void _ProfLogSection(Bool bPrint, Int32 nTabs, char *pSectionName, ProfLogEntryT *pBegin, ProfLogEntryT *pEnd)
 {
 	Int32 nCount[PROF_COUNTER_NUM];
 	ProfLogSectionT *pSection;

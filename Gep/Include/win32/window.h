@@ -14,7 +14,7 @@ private:
 	HWND	m_hWndStatus;
 	Uint32  m_uStatusHeight;
 
-	Bool	RegisterClass(HINSTANCE hInstance, Char *pClassName, LPCSTR pMenuName);
+	Bool	RegisterClass(HINSTANCE hInstance, char *pClassName, LPCSTR pMenuName);
 
 protected:
 	virtual void OnMenuCommand(Uint32 uCmd);
@@ -33,11 +33,11 @@ public:
 	virtual LRESULT OnMessage(UINT iMsg, WPARAM wParam, LPARAM lParam);
 	virtual void Process();
 
-	void Create(Char *pClassName, Char *pAppName, Uint32 uStyle, LPCSTR pMenuName);
+	void Create(char *pClassName, char *pAppName, Uint32 uStyle, LPCSTR pMenuName);
 	void ShowWindow(int iCmdShow);
 	void Destroy();
 
-	void SetTitle(Char *pTitle);
+	void SetTitle(char *pTitle);
 	void SetSize(Int32 Width, Int32 Height);
 	HWND GetWnd() {return m_hWnd;}
 
@@ -45,7 +45,7 @@ public:
 	void DestroyStatusBar();
 	Bool HasStatusBar() {return m_hWndStatus ? TRUE : FALSE;}
 	Uint32 GetStatusHeight() {return m_uStatusHeight;}
-	void SetStatusText(Int32 iPart, Char *pStr);
+	void SetStatusText(Int32 iPart, char *pStr);
 
 	Bool IsActive() {return m_bActive;}
 };

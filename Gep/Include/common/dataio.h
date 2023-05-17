@@ -22,7 +22,7 @@ class CFileIO : public CDataIO
 	FILE	*m_pFile;
 public:
 	CFileIO();
-	virtual Bool Open(const Char *pFilePath, const Char *pMode);
+	virtual Bool Open(const char *pFilePath, const char *pMode);
 	virtual size_t Read(void *pBuffer, Int32 nBytes);
 	virtual size_t Write(const void *pBuffer, Int32 nBytes);
 	virtual int Seek(Int32 iPos, Int32 Whence);

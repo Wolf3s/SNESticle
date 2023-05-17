@@ -51,15 +51,15 @@ void ProfProcess(void)
 
 		if (_Prof_nFrames == 0)
 		{
-            // close log, print log, and reopen log
+            /* close log, print log, and reopen log */
 			ProfLogEnd(&_Prof_Log, Prof_pLogEntry);
 			ProfLogPrint(&_Prof_Log, FALSE, TRUE);
-//			ProfLogPrint(&_Prof_Log, TRUE, TRUE);
+/*			ProfLogPrint(&_Prof_Log, TRUE, TRUE); */
 			Prof_pLogEntry = ProfLogBegin(&_Prof_Log);
 		}
 	} else
 	{
-        // close and reopen log for next frame
+        /* close and reopen log for next frame */
 		ProfLogEnd(&_Prof_Log, Prof_pLogEntry);
 		Prof_pLogEntry = ProfLogBegin(&_Prof_Log);
 	}

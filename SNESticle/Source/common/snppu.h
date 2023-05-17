@@ -192,9 +192,9 @@ public:
 
 	void                    SaveState(struct SNStatePPUT *pState);
 	void                    RestoreState(struct SNStatePPUT *pState);
-
-	static Char *           GetRegName(Uint32 uAddr);
-
+#if SNES_DEBUG
+	static char *           GetRegName(Uint32 uAddr);
+#endif
 private:
     friend class SnesDMAC;
 
