@@ -8,27 +8,27 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v1.1
     - name: main
       working-directory: gep/Project/win32/
       run: |
            dir
-           msbuild gepwin32.vcxproj -m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
+           msbuild gepwin32_2022.vcxproj -m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
     - name: main
       working-directory: SNESticle/Project/win32/
       run: |
            dir
-           msbuild win32.vcxproj -m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
+           msbuild win32_2022.vcxproj -m /property:Configuration=Release /property:Platform=x86 /verbosity:minimal
     - name: main64
       working-directory: gep/Project/win32/
       run: |
            dir
-           msbuild gepwin32.vcxproj -m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal
+           msbuild gepwin32_2022.vcxproj -m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal
     - name: main64
       working-directory: SNESticle/Project/win32/
       run: |
            dir
-           msbuild win32.vcxproj -m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal           
+           msbuild win32_2022.vcxproj -m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal           
     - name: upload
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
