@@ -73,7 +73,6 @@ private:
 	// extra hardware
 	ISNDSP		*m_pDsp;
 
-
 	SNDSP1		m_DSP1;
 #endif
 

@@ -17,7 +17,6 @@ void SnesReg16FT::Write8(Uint8 uData)
 	}
 }
 
-
 Uint8 SnesReg16FT::Read8()
 {
 	if (!bFlip)
@@ -30,9 +29,6 @@ Uint8 SnesReg16FT::Read8()
 		return Reg.b.h;
 	}
 }
-
-
-
 
 void SnesReg16FT::Reset()
 {

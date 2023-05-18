@@ -98,7 +98,7 @@
     <ClCompile Include="..\..\Source\common\sn9x\SPC700.CPP">
       <Filter>Source Files\Snes\SPC700</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\win32\snmask.cpp">
+    <ClCompile Include="..\..\Source\win32\snmask.c">
       <Filter>Source Files\Snes\PPU</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\common\snppu.cpp">
@@ -110,7 +110,7 @@
     <ClCompile Include="..\..\Source\common\snppublend_c.cpp">
       <Filter>Source Files\Snes\PPU</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\common\snppucolor.cpp">
+    <ClCompile Include="..\..\Source\common\snppucolor.c">
       <Filter>Source Files\Snes\PPU</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\common\snppuobj.cpp">
@@ -218,9 +218,6 @@
       <Filter>Source Files\Snes\SPC700</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\common\snmask.h">
-      <Filter>Source Files\Snes\PPU</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\win32\snmaskop.h">
       <Filter>Source Files\Snes\PPU</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\common\snppu.h">

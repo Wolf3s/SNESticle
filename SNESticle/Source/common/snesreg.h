@@ -1,6 +1,10 @@
 
 #ifndef _SNESREG_H
 #define _SNESREG_H
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 typedef Uint8 SnesReg8T;
 typedef Uint32 SnesReg32T;
@@ -36,5 +40,9 @@ struct SnesReg16FT
 	Uint8 Read8();
 	void Reset();
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

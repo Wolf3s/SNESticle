@@ -85,8 +85,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\Gep\Include\win32;..\..\..\Gep\Include\common;..\..\Source\common;..\..\source\win32;..\..\source\win32\resource;..\..\source\win32\interface;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>PROF_ENABLED=0;CODE_PLATFORM=1;CODE_DEBUG=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\Gep\Include\win32;..\..\..\Gep\Include\common\zlib;..\..\..\Gep\Include\common;..\..\source\win32;..\..\source\win32\resource;..\..\source\win32\interface;..\..\Source\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>PROF_ENABLED=0;CODE_PLATFORM=1;CODE_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling />
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -109,8 +109,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\Gep\Include\win32;..\..\..\Gep\Include\common;..\..\Source\common;..\..\source\win32;..\..\source\win32\resource;..\..\source\win32\interface;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>PROF_ENABLED=0;CODE_PLATFORM=1;CODE_DEBUG=1;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\Gep\Include\win32;..\..\..\Gep\Include\common\zlib;..\..\..\Gep\Include\common;..\..\source\win32;..\..\source\win32\resource;..\..\source\win32\interface;..\..\Source\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>PROF_ENABLED=0;CODE_PLATFORM=1;CODE_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -136,8 +136,8 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\..\Gep\Include\win32;..\..\..\Gep\Include\common;..\..\Source\common;..\..\source\win32;..\..\source\win32\resource;..\..\source\win32\interface;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>PROF_ENABLED=0;CODE_PLATFORM=1;CODE_DEBUG=0;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\Gep\Include\win32;..\..\..\Gep\Include\common\zlib;..\..\..\Gep\Include\common;..\..\source\win32;..\..\source\win32\resource;..\..\source\win32\interface;..\..\Source\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>PROF_ENABLED=0;CODE_PLATFORM=1;CODE_DEBUG=0;_CRT_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling />
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -164,7 +164,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\..\Gep\Include\win32;..\..\..\Gep\Include\common\zlib;..\..\..\Gep\Include\common;..\..\source\win32;..\..\source\win32\resource;..\..\source\win32\interface;..\..\Source\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>PROF_ENABLED=0;CODE_PLATFORM=1;CODE_DEBUG=0;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PROF_ENABLED=0;CODE_PLATFORM=1;CODE_DEBUG=0;_CRT_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -217,7 +217,7 @@
     <ClCompile Include="..\..\Source\common\snppu.cpp" />
     <ClCompile Include="..\..\Source\common\snppubg.cpp" />
     <ClCompile Include="..\..\Source\common\snppublend_c.cpp" />
-    <ClCompile Include="..\..\Source\common\snppucolor.cpp" />
+    <ClCompile Include="..\..\Source\common\snppucolor.c" />
     <ClCompile Include="..\..\Source\common\snppuobj.cpp" />
     <ClCompile Include="..\..\Source\common\snppurender.cpp" />
     <ClCompile Include="..\..\Source\common\snppurender8.cpp" />
@@ -241,7 +241,7 @@
     <ClCompile Include="..\..\Source\win32\interface\textview.cpp" />
     <ClCompile Include="..\..\Source\win32\mainloop.cpp" />
     <ClCompile Include="..\..\Source\win32\sneswin.cpp" />
-    <ClCompile Include="..\..\Source\win32\snmask.cpp" />
+    <ClCompile Include="..\..\Source\win32\snmask.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\common\sncpu.h" />
@@ -281,7 +281,6 @@
     <ClInclude Include="..\..\Source\win32\mainloop.h" />
     <ClInclude Include="..\..\Source\win32\resource\resource.h" />
     <ClInclude Include="..\..\Source\win32\sneswin.h" />
-    <ClInclude Include="..\..\Source\win32\snmaskop.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\Source\win32\resource\gepres.rc" />
