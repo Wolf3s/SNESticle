@@ -5,6 +5,7 @@
 #include <libpad.h>
 #include <stdio.h>
 #include "types.h"
+#define NEWLIB_PORT_AWARE
 #include "fileio.h"
 #include "font.h"
 #include "poly.h"
@@ -444,9 +445,11 @@ void CBrowserScreen::Input(Uint32 buttons, Uint32 trigger)
 }
 
 
-
-
+#ifdef PS2_EE
+static int _BrowserDread(int fd, io_dirent_t *dirent)
+#else
 static int _BrowserDread(int fd, fio_dirent_t *dirent)
+#endif
 {
 	if (MCSave_IsInitialized())
 	{
@@ -482,7 +485,11 @@ void CBrowserScreen::SetDir(Char *pDir)
 		if (fd >= 0)
 		{
 			static Uint8 dirbuf[512] __attribute__((aligned(64)));
+#ifdef PS2_EE
+			io_dirent_t *dirent = (io_dirent_t *)&dirbuf;
+#else
 			fio_dirent_t *dirent = (fio_dirent_t *)&dirbuf;
+#endif
 		 //	printf("fioDopen: %s %d %d %d\n", pDir, fd, sizeof(dirent), sizeof(fio_dirent_t));
 			
 //			while (fioDread(fd, dirent) > 0) // && m_nEntries < 1280)
@@ -494,8 +501,9 @@ void CBrowserScreen::SetDir(Char *pDir)
 		   //     printf("%s %02X %d \n", 		            dirent->name, dirent->stat.attr,    dirent->stat.size		            );
 				if (strcmp((char *)dirent->name,".") && strcmp((char *)dirent->name,".."))
 				{
-					
+#if 0
 			        eType = BROWSER_ENTRYTYPE_OTHER;
+
 			        if (dirent->stat.attr & FIO_ATTR_SUBDIR)
 			        {
 			            eType = BROWSER_ENTRYTYPE_DIR;
@@ -503,7 +511,7 @@ void CBrowserScreen::SetDir(Char *pDir)
 			        {
 						eType = (BrowserEntryTypeE)SendMessage(2, 0, (void *)dirent->name);
 			        }
-
+#endif
 			        AddEntry((char *)dirent->name, eType, dirent->stat.size);
 					/*
 					if (!(m_nEntries & 127))

@@ -7,7 +7,7 @@
 #include "gslist.h"
 #include "ps2dma.h"
 #include "gpfifo.h"
-
+#include <stdio.h>
 static Uint128 *_GPFifo_pLists[2];
 static Uint32  _GPFifo_nListQwords;
 static Uint32  _GPFifo_iCurList;

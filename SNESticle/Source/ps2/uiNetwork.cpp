@@ -4,6 +4,7 @@
 #include <kernel.h>
 #include <libpad.h>
 #include "types.h"
+#define NEWLIB_PORT_AWARE
 #include "fileio.h"
 #include "font.h"
 #include "poly.h"

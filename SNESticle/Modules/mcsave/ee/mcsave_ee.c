@@ -121,9 +121,11 @@ void MCSave_Shutdown()
 	_MCSave_bInitialized = 0;
 }
 
-
-
+#ifdef PS2_EE
+int MCSave_Dread(int fd, io_dirent_t *dir)
+#else
 int MCSave_Dread(int fd, fio_dirent_t *dir)
+#endif
 {
 	union { int fd[2]; int result; } arg;
 

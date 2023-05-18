@@ -162,8 +162,11 @@ void InputPoll()
 				xpadRead(_Input_PadPort[iPad][0], _Input_PadPort[iPad][1], &padStatus); // port, slot, buttons
 			else
 				padRead(_Input_PadPort[iPad][0], _Input_PadPort[iPad][1], &padStatus); // port, slot, buttons
-
+#ifdef PS2_EE
+			uData = 0xffff ^ ((padStatus.btns << 8) | padStatus.btns);
+#else
 			uData = 0xffff ^ ((padStatus.btns[0] << 8) | padStatus.btns[1]);
+#endif
 			#if 0
 			if (padStatus.ljoy_h < (0x80-0x30)) uData|=PAD_LEFT;
 			if (padStatus.ljoy_h > (0x80+0x30)) uData|=PAD_RIGHT;

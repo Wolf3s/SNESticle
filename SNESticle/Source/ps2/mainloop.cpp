@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define NEWLIB_PORT_AWARE
 #include <fileio.h>
 #include <iopheap.h>
 #include <libpad.h>
@@ -30,7 +31,9 @@
 #include "memcard.h"
 #include "pathext.h"
 #include "snppucolor.h"
+#if 0
 #include "version.h"
+#endif
 #include "emumovie.h"
 extern "C" {
 #include "cd.h"
@@ -39,9 +42,9 @@ extern "C" {
 #include "snspc_c.h"
 };
 
-#include "nespal.h"
-#include "nes.h"
-#include "nesstate.h"
+//#include "nespal.h"
+#include "snes.h"
+//#include "nesstate.h"
 
 #include <sifrpc.h>
 #include <loadfile.h>
@@ -106,6 +109,7 @@ enum
 #include "uiNetwork.h"
 #include "uiMenu.h"
 #include "uiLog.h"
+#include "emurom.h"
 
 static class CBrowserScreen *_MainLoop_pBrowserScreen;
 static class CNetworkScreen *_MainLoop_pNetworkScreen;
@@ -115,10 +119,12 @@ static CScreen *_MainLoop_pScreen = NULL;
 
 static SnesSystem *_pSnes;
 static SnesRom	  *_pSnesRom;
+#if 0
 static NesSystem  *_pNes;
 static NesRom	  *_pNesRom;
 static NesFDSBios  *_pNesFDSBios;
 static NesDisk	  *_pNesFDSDisk;
+#endif
 static Int32 _MainLoop_iDisk=0;
 static Bool _MainLoop_bDiskInserted=FALSE;
 static Char _RomName[256];
@@ -130,7 +136,7 @@ static Char  _MainLoop_SaveTitle[] = "SNESticle\nSNESticle";
 static Char _SramPath[256] = "host0:/cygdrive/d/emu/";
 #endif
 
-static CEmuSystem  *_pSystem;
+static Emu::System  *_pSystem;
 
 static CRenderSurface *_fbTexture[2];
 static Uint32 _iframetex=0;
@@ -141,9 +147,11 @@ static CWavFile _WavFile;
 static Uint8 _RomData[4 * 1024 * 1024 + 1024] __attribute__((aligned(64))) __attribute__ ((section (".bss")));
 
 static SnesStateT		_SnesState;
+#if 0
 static NesStateT		_NesState;
+#endif
 
-static CEmuMovieClip *  s_pMovieClip;
+static Emu::MovieClip *  s_pMovieClip;
 
 
 static Uint32 _MainLoop_SRAMChecksum;
@@ -343,7 +351,7 @@ static Bool _MainLoopSaveSRAM(Bool bSync)
 
 		PathTruncFileName(SaveName, _RomName, PathGetMaxFileNameLength(_SramPath) - 4);
 
-        sprintf(Path, "%s/%s.%s", _SramPath, SaveName, _pSystem->GetString(EMUSYS_STRING_SRAMEXT) );
+        sprintf(Path, "%s/%s.%s", _SramPath, SaveName, _pSystem->GetString(Emu::System::StringE::STRING_STATEEXT) );
 
 		MCSave_WriteSync(TRUE, NULL);
 		MCSave_Write((char *)Path, (char *)pSRAM, nSramBytes);
@@ -374,7 +382,8 @@ static void _MainLoopLoadSRAM()
 
 		PathTruncFileName(SaveName, _RomName, PathGetMaxFileNameLength(_SramPath) - 4);
 
-        sprintf(Path, "%s/%s.%s", _SramPath, SaveName, _pSystem->GetString(EMUSYS_STRING_SRAMEXT));
+        sprintf(Path, "%s/%s.%s", _SramPath, SaveName, _pSystem->GetString(Emu::System::StringE::STRING_STATEEXT));
+
 		if (MemCardReadFile(Path, pSRAM, nSramBytes))
 		{
             _MainLoop_SRAMChecksum = _CalcChecksum((Uint32 *)pSRAM, nSramBytes / 4);
@@ -461,8 +470,9 @@ void _MainLoopLoadState()
         {
             _pSnes->RestoreState(&_SnesState);
         }
-    } else
-    if (_pSystem == _pNes)
+    } 
+#if 0		
+	else if (_pSystem == _pNes)
     {
 	    sprintf(Path, "%s%s.nst", MAINLOOP_STATEPATH, _RomName);
 
@@ -478,6 +488,7 @@ void _MainLoopLoadState()
             _pNes->RestoreState(&_NesState);
         }
     }
+#endif
 
 }
 
@@ -499,8 +510,9 @@ void _MainLoopSaveState()
         {
 		    ConPrint("State saved to %s\n", Path);
         }
-    } else
-    if (_pSystem == _pNes)
+    } 
+#if 0	
+	else if (_pSystem == _pNes)
     {
 	    sprintf(Path, "%s%s.nst", MAINLOOP_STATEPATH, _RomName);
 
@@ -512,11 +524,13 @@ void _MainLoopSaveState()
 		    ConPrint("State saved to %s\n", Path);
         }
     }
+#endif	
 }
 
 
 static void _MainLoopUnloadRom()
 {
+
     // stop recording if we are recording
     if (s_pMovieClip->IsRecording())
     {
@@ -533,9 +547,11 @@ static void _MainLoopUnloadRom()
 	// unload old rom
 	_pSnes->SetRom(NULL);
 	_pSnesRom->Unload();
+#if 0
 	_pNes->SetRom(NULL);
 	_pNesRom->Unload();
 	_pNesFDSDisk->Unload();
+#endif
     _bStateSaved = FALSE;
     _pSystem = NULL;
 
@@ -637,10 +653,10 @@ static int _MainLoopReadZipData(Uint8 *pBuffer, Int32 nBufferBytes, const char *
 
 
 
-static Bool _MainLoopLoadRomData(CEmuRom *pRom, Uint8 *pRomData, Int32 nRomBytes)
+static Bool _MainLoopLoadRomData(Emu::Rom *pRom, Uint8 *pRomData, Int32 nRomBytes)
 {
     CMemFileIO romfile;
-    EmuRomLoadErrorE eError;
+    Emu::Rom::LoadErrorE eError;
 
     // open memoryfile for rom data
     romfile.Open(pRomData, nRomBytes);
@@ -649,7 +665,7 @@ static Bool _MainLoopLoadRomData(CEmuRom *pRom, Uint8 *pRomData, Int32 nRomBytes
     eError = pRom->LoadRom(&romfile);
     romfile.Close();
 
-	if (eError!=EMUROM_LOADERROR_NONE)
+	if (eError!=Emu::Rom::LoadErrorE::LOADERROR_NONE)
 	{
         ConPrint("ERROR: loading rom %d\n", eError);
 		return FALSE;
@@ -657,10 +673,10 @@ static Bool _MainLoopLoadRomData(CEmuRom *pRom, Uint8 *pRomData, Int32 nRomBytes
 	return TRUE;
 }
 
-static Bool _MainLoopLoadBios(CEmuRom *pRom, const Char *pFilePath)
+static Bool _MainLoopLoadBios(Emu::Rom *pRom, const Char *pFilePath)
 {
     CFileIO romfile;
-    EmuRomLoadErrorE eError;
+    Emu::Rom::LoadErrorE eError;
 
     // open memoryfile for rom data
     if (!romfile.Open(pFilePath, "rb"))
@@ -673,7 +689,7 @@ static Bool _MainLoopLoadBios(CEmuRom *pRom, const Char *pFilePath)
     eError = pRom->LoadRom(&romfile);
     romfile.Close();
 
-	if (eError!=EMUROM_LOADERROR_NONE)
+	if (eError!=Emu::Rom::LoadErrorE::LOADERROR_NONE)
 	{
         ConPrint("ERROR: loading rom %d\n", eError);
 		return FALSE;
@@ -692,9 +708,9 @@ static Bool _MainLoopLoadSnesPalette(const char *pFileName)
 static Bool _MainLoopExecuteFile(const char *pFileName, Bool bLoadSRAM)
 {
 	PathExtTypeE eType;
-	CEmuRom *pRom = NULL;
-	CEmuSystem *pSystem = NULL;
-	CEmuRom *pBios = NULL;
+	Emu::Rom *pRom = NULL;
+	Emu::System *pSystem = NULL;
+	Emu::Rom *pBios = NULL;
 	char FileName[256];
 
 	if (pFileName==NULL)
@@ -787,6 +803,7 @@ static Bool _MainLoopExecuteFile(const char *pFileName, Bool bLoadSRAM)
 	// determine what kind of system to use for this rom
 	switch (eType)
 	{
+#if 0		
 		case MAINLOOP_ENTRYTYPE_NESROM:
 			pSystem = _pNes;
 			pRom    = _pNesRom;
@@ -807,7 +824,7 @@ static Bool _MainLoopExecuteFile(const char *pFileName, Bool bLoadSRAM)
 			pBios   = _pNesFDSBios;
 			_MainLoop_fOutputIntensity = 0.8f;
 			break;
-
+#endif
 		case MAINLOOP_ENTRYTYPE_SNESROM:
 			pSystem = _pSnes;
 			pRom    = _pSnesRom;
@@ -870,7 +887,11 @@ static Bool _MainLoopExecuteFile(const char *pFileName, Bool bLoadSRAM)
 	{
 		// setup disk system
 		pSystem->SetRom(pBios);
+#if 0
 		_pNes->SetNesDisk(_pNesFDSDisk);
+#else
+		_pSnes->SetSnesRom(_pSnesRom);
+#endif
 	} 
 	else
 	{
@@ -921,7 +942,7 @@ static Bool _MainLoopExecuteFile(const char *pFileName, Bool bLoadSRAM)
 	// clear screen
     _fbTexture[0]->Clear();
     TextureUpload(&_OutTex, _fbTexture[0]->GetLinePtr(0));
-
+#if 0
 	if (eType == MAINLOOP_ENTRYTYPE_NESFDSDISK)
 	{
 		// default to disk 0
@@ -929,7 +950,7 @@ static Bool _MainLoopExecuteFile(const char *pFileName, Bool bLoadSRAM)
 		_MainLoop_bDiskInserted=TRUE;
 		_pNes->GetMMU()->InsertDisk(_MainLoop_iDisk);
 	}
-
+#endif
 	return TRUE;
 }
 
@@ -937,7 +958,7 @@ static Bool _MainLoopExecuteFile(const char *pFileName, Bool bLoadSRAM)
 
 
 
-
+#if 0
 static void _MainLoopSetPalette(NesPalE eNesPal)
 {
 	Color32T BasePal[64];
@@ -958,7 +979,7 @@ static void _MainLoopSetPalette(NesPalE eNesPal)
 		_fbTexture[1]->SetPaletteEntries(iPal, Palette, 64);
 	}
 }
-
+#endif
 
 static void _MainLoopSetScreen(CScreen *pScreen)
 {
@@ -1195,6 +1216,7 @@ static int _MainLoopMenuEvent(Uint32 Type, Uint32 Parm1, void *Parm2)
 				ppInstallFiles[0] = "BOOT.ELF"; // dest
 				switch (Parm1)
 				{
+#if 0					
 					case 0:
 						// cdrom->mc0
 						ppInstallFiles[1] = VersionGetElfName(); // src
@@ -1204,6 +1226,7 @@ static int _MainLoopMenuEvent(Uint32 Type, Uint32 Parm1, void *Parm2)
 						ppInstallFiles[1] = VersionGetElfName(); // src
 						InstallFiles(mc1, "cdrom0:\\", ppInstallFiles, _MainLoopInstallCallback);
 						break;
+#endif
 					case 2:
 						ppInstallFiles[1] = "SNESTICLE.ELF"; // src
 						InstallFiles(mc0, "host:", ppInstallFiles, _MainLoopInstallCallback);
@@ -1493,9 +1516,10 @@ static Bool _MainLoopInitNetwork(Char **ppSearchPaths)
     }
 
 	// init ps2ip
+#if 0	
     printf("ps2ip_Init()\n");
     ps2ip_init();
-
+#endif
 	// return TRUE if we initialized networking ourselves
 	return bLoadedNetwork;
 }
@@ -1832,7 +1856,7 @@ Bool MainLoopInit()
 	_MainLoop_pLogScreen->SetMsgFunc(_MainLoopLogEvent);
 	_MainLoopSetScreen(_MainLoop_pLogScreen);
 	_bMenu = TRUE;
-
+#if 0
 	const VersionInfoT *pVersionInfo = VersionGetInfo();
 
 	ScrPrintf("%s v%d.%d.%d %s %s %s", 
@@ -1844,7 +1868,7 @@ Bool MainLoopInit()
 		pVersionInfo->BuildDate, 
 		pVersionInfo->BuildTime);
 	ScrPrintf("%s",  pVersionInfo->CopyRight);
-
+#endif
 	ScrPrintf("BootPath: %s", MainGetBootPath());
 	ScrPrintf("BootDir: %s", MainGetBootDir());
 
@@ -1891,9 +1915,9 @@ Bool MainLoopInit()
     TextureSetAddr(&_OutTex, TEXADDR );
 
     TextureUpload(&_OutTex, _fbTexture[0]->GetLinePtr(0));
-
+#if 0
 	_MainLoopSetPalette(NESPAL_FCEU);
-
+#endif
 	PathExtAdd(MAINLOOP_ENTRYTYPE_GZ,  "gz");
 	PathExtAdd(MAINLOOP_ENTRYTYPE_ZIP, "zip");
 
@@ -1911,7 +1935,7 @@ Bool MainLoopInit()
 	}
 
 	PathExtAdd(MAINLOOP_ENTRYTYPE_SNESPALETTE, "snpal");
-
+#if 0
 	_pNes = new NesSystem();
 	_pNes->Reset();
 
@@ -1932,8 +1956,9 @@ Bool MainLoopInit()
 	{
 		PathExtAdd(MAINLOOP_ENTRYTYPE_NESFDSBIOS, _pNesFDSBios->GetExtName(iExt));
 	}
+#endif
 
-	s_pMovieClip = new CEmuMovieClip(_pSnes->GetStateSize(), 60 * 60 * 60);
+	s_pMovieClip = new Emu::MovieClip(_pSnes->GetStateSize(), 60 * 60 * 60);
 
 	// init menu
 	_MainLoop_pBrowserScreen = new CBrowserScreen(6000);
@@ -2011,7 +2036,7 @@ static Uint16 _MainLoopSnesInput(Uint32 cond)
 	return pad;
 }
 
-
+#if 0
 static Uint16 _MainLoopNesInput(Uint32 cond)
 {
 	Uint8 pad = 0;
@@ -2030,7 +2055,7 @@ static Uint16 _MainLoopNesInput(Uint32 cond)
 	if ((cond & PAD_START)) pad|= (1<<NESIO_BIT_START);
 	return pad;
 }
-
+#endif
 static void _MainLoopSetSampleRate(Uint32 uSampleRate)
 {
     _SJPCMMix->SetSampleRate(uSampleRate);
@@ -2083,7 +2108,7 @@ static void _MainLoopResetInputChecksums()
 
 
 #if 1
-static Bool _ExecuteSnes(CRenderSurface *pSurface, CMixBuffer *pMixBuffer, EmuSysInputT *pInput, EmuSysModeE eMode)
+static Bool _ExecuteSnes(CRenderSurface *pSurface, CMixBuffer *pMixBuffer, Emu::SysInputT *pInput, Emu::System::ModeE eMode)
 {
 
         #if !TESTASM  
@@ -2156,14 +2181,13 @@ static Bool _ExecuteSnes(CRenderSurface *pSurface, CMixBuffer *pMixBuffer, EmuSy
 }
 
 extern "C" {
-#include "ncpu_c.h"
+//#include "ncpu_c.h"
 };
-
+#if 0
 static Bool _ExecuteNes(CRenderSurface *pSurface, CMixBuffer *pMixBuffer, EmuSysInputT *pInput, EmuSysModeE eMode)
 {
 
-    #if !MAINLOOP_NESSTATEDEBUG
-
+#if !MAINLOOP_NESSTATEDEBUG
     N6502SetExecuteFunc(NCPUExecute_C);
 
 	PROF_ENTER("NesExecuteFrame");
@@ -2188,7 +2212,7 @@ static Bool _ExecuteNes(CRenderSurface *pSurface, CMixBuffer *pMixBuffer, EmuSys
     return TRUE;
 }
 #endif
-
+#endif
 
 
 
@@ -2198,7 +2222,7 @@ Uint16 _MainLoopInput(Uint32 pad)
     {
         return 0;
     }
-
+#if 0
     if (_pSystem==_pSnes)
     {
         return _MainLoopSnesInput(pad);
@@ -2206,8 +2230,12 @@ Uint16 _MainLoopInput(Uint32 pad)
     if (_pSystem==_pNes)
     {
         return _MainLoopNesInput(pad);
-    } 
-    return 0;
+    }
+	   return 0;
+#else
+ 	return _MainLoopSnesInput(pad);
+#endif
+ 
 }
 
 #include "snppublend_gs.h"
@@ -2272,7 +2300,8 @@ void MainLoopRender()
 
 
     if (!_bMenu)
-    {
+    {	
+	
 		if (s_pMovieClip->IsPlaying())
 		{
 	        FontSelect(2);
@@ -2440,7 +2469,9 @@ Bool MainLoopProcess()
         CRenderSurface *pSurface;
         CMixBuffer *pMixBuffer = NULL;
         pSurface = _fbTexture[_iframetex];
-		EmuSysInputT Input;
+	
+		Emu::SysInputT Input;
+	
 		Int32 iPad;
 
         /*
@@ -2502,8 +2533,11 @@ Bool MainLoopProcess()
 				// if controller 4 is disconnected, use controller 2 of second peer
 				Input.uPad[3] = (Uint16)(NetInput.InputRecv[1]>>16);
 			}
-        }  else
+		
+        }  
+		else
 		{
+		
             if (s_pMovieClip->IsPlaying())
             {
                 if (!s_pMovieClip->PlayFrame(Input))
@@ -2512,11 +2546,12 @@ Bool MainLoopProcess()
                     ConPrint("Movie: Play End\n");
                 }
             }
+	
 		}
 
         if (NetInput.eGameState != NETPLAY_GAMESTATE_PAUSE)
         {
-			EmuSysModeE eMode;
+			Emu::System::ModeE eMode;
 
             #if MAINLOOP_HISTORY
             if (_nHistory < 16384 * 2)
@@ -2535,7 +2570,7 @@ Bool MainLoopProcess()
 			_uInputChecksum[3] += Input.uPad[3];
 			_uInputChecksum[4] += Input.uPad[4];
 
-			eMode = (NetInput.eGameState == NETPLAY_GAMESTATE_IDLE) ? EMUSYS_MODE_ACCURATENONDETERMINISTIC : EMUSYS_MODE_INACCURATEDETERMINISTIC;
+			eMode = (NetInput.eGameState == NETPLAY_GAMESTATE_IDLE) ? Emu::System::MODE_ACCURATENONDETERMINISTIC : Emu::System::MODE_INACCURATEDETERMINISTIC;
 
             if (s_pMovieClip->IsRecording())
             {
@@ -2546,6 +2581,7 @@ Bool MainLoopProcess()
                 }
             }
 
+#if 0
             if (_pSystem==_pSnes)
             {
 //                _ExecuteSnes(NULL, NULL, &Input, eMode);
@@ -2559,7 +2595,10 @@ Bool MainLoopProcess()
 
                 TextureUpload(&_OutTex, pSurface->GetLinePtr(0));
             } 
-
+#else
+ 			    GPPrimDisableZBuf();
+                _ExecuteSnes(pSurface, pMixBuffer, &Input, eMode);
+#endif
 		    _iframetex^=1;
         }
 
@@ -2728,6 +2767,7 @@ static void _MainLoopInputProcess(Uint32 buttons)
 
         if (trigger&PAD_L3)
 		{
+			
 	        // stop recording if we are recording
 	        if (s_pMovieClip->IsRecording())
 	        {
@@ -2920,7 +2960,7 @@ static void _MainLoopInputProcess(Uint32 buttons)
 			}
 		}
 
-
+#if 0
 		// perform cheesy non-deterministic disk switching
 		if (trigger & (PAD_R1|PAD_L1) )
 		{
@@ -2960,7 +3000,7 @@ static void _MainLoopInputProcess(Uint32 buttons)
 				}
 			}
 		}
-
+#endif
 
 	}
 #endif
@@ -3010,7 +3050,7 @@ static void _MenuDraw()
 //	FontColor4f(1.0, 0.5f, 0.5f, 1.0f);
 	FontColor4f(0.2, 0.6f, 0.2f, 1.0f);
 
-
+#if 0
 	const VersionInfoT *pVersionInfo = VersionGetInfo();
 
 	char VersionStr[256];
@@ -3036,6 +3076,7 @@ static void _MenuDraw()
 		pVersionInfo->CompilerVersion[0],  
 		pVersionInfo->CompilerVersion[1]
 		);
+#endif	
     FontPrintf(48,vy,"IP: %d.%d.%d.%d", 
             (config.ipaddr.s_addr >> 0) & 0xFF,
             (config.ipaddr.s_addr >> 8) & 0xFF,

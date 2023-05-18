@@ -3,6 +3,7 @@
 #include <libmc.h>
 #include <stdio.h>
 #include <string.h>
+#define NEWLIB_PORT_AWARE
 #include <fileio.h>
 #include "types.h"
 
@@ -56,7 +57,11 @@ int MemCardCreateSave(char *pDir, char *pTitle, Bool bForceWrite)
 
 	memset(&icon_sys, 0, sizeof(mcIcon));
 	strcpy((char *)icon_sys.head, "PS2D");
+#ifdef PS2_EE	
+	strcpy((char*)&icon_sys.title, (const char*)pTitle);
+#else
 	strcpy_sjis((short *)&icon_sys.title, pTitle);
+#endif	
 	icon_sys.nlOffset = 16;
 	icon_sys.trans = 0x60;
 	memcpy(icon_sys.bgCol, bgcolor, sizeof(bgcolor));

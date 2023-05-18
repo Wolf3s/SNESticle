@@ -8,22 +8,25 @@
 #export EE_GCC_VERSION  ?= 2.9
 
 #export EE_GCC_VERSION  ?= 3.2.2
-export EE_GCC_VERSION  ?= 3.2.2-b1
+#export EE_GCC_VERSION  ?= 3.2.2-b1
+export EE_GCC_VERSION   ?= 11.3.0
 
-export IOP_GCC_VERSION ?= 2.8.1
-export DVP_GCC_VERSION ?= 3.2.2-beta
+#export IOP_GCC_VERSION ?= 2.8.1
+export IOP_GCC_VERSION ?= 11.3.0
+#export DVP_GCC_VERSION ?= 3.2.2-beta
+export DVP_GCC_VERSION ?= 11.3.0
 
 #
 # Toolchain configuration
 #
 
-PS2DEV       ?= $(DEV)/ps2dev
+#PS2DEV       ?= $(DEV)/ps2dev
 
 EE_BASE      = $(PS2DEV)/ee
 IOP_BASE     = $(PS2DEV)/iop
 DVP_BASE     = $(PS2DEV)/dvp
 
-EE_PREFIX   = $(EE_BASE)/bin/ee-
+EE_PREFIX   = $(EE_BASE)/bin/mips64r5900el-ps2-elf-
 EE_CC  	    = $(EE_PREFIX)gcc
 EE_CCPLUS   = $(EE_PREFIX)gcc
 EE_AS       = $(EE_PREFIX)as
@@ -32,7 +35,7 @@ EE_AR       = $(EE_PREFIX)ar
 EE_OBJCOPY  = $(EE_PREFIX)objcopy
 EE_STRIP    = $(EE_PREFIX)strip
 
-IOP_PREFIX  = $(IOP_BASE)/bin/iop-
+IOP_PREFIX  = $(IOP_BASE)/bin/mips64r5900el-ps2-elf-
 IOP_CC      = $(IOP_PREFIX)gcc
 IOP_AS      = $(IOP_PREFIX)as
 IOP_LD      = $(IOP_PREFIX)ld
@@ -77,9 +80,13 @@ PS2IP_EE_INCS      =  -I$(PS2IP_BASE)/include
 #
 
 TARGET   	= SNESticle.elf
-LIBS     	= -lmc -lpad -lps2ip -lkernel -lc -lm -lgcc
+LIBS     	= -lmc -lpad -lps2ip -lkernel -lc -lm  -ldebug
 ifneq ($(EE_GCC_VERSION), 2.9)
 LIBS       += -lstdc++
+endif
+
+ifneq ($(EE_GCC_VERSION), 3.2.2)
+LIBS       += -lgcc
 endif
 
 LINKFILE    = ../linkfile
@@ -102,8 +109,8 @@ NESSOURCE 	= ../../../NESticle/Source
 
 SOURCE  = 
 SOURCE += $(GEPDIR)/Source/ps2
-SOURCE += $(GEPDIR)/Source/common/zlib
-SOURCE += $(GEPDIR)/Source/common/unzip
+SOURCE += $(GEPDIR)/Include/common/zlib
+SOURCE += $(GEPDIR)/Include/common/unzip
 SOURCE += $(GEPDIR)/Source/common
 SOURCE += $(GEPDIR)/Source/common/console
 SOURCE += $(SNESSOURCE)/ps2
@@ -142,15 +149,15 @@ INCLUDE+= -I$(BUILD_DIR)
 # Object files
 # 
 
-DATAOBJS = memcard_icon.inc # romdisk.o
+DATAOBJS = memcard_icon.inc # 
 
 OBJS = 
 OBJS +=	crt0.o
 OBJS +=	main.o
-OBJS +=	excepHandler.o
+#OBJS +=	excepHandler.o
 OBJS +=	exceptions.o
 #OBJS +=	stdio.o 
-OBJS +=	array.o
+#OBJS +=	array.o
 OBJS +=	file.o
 OBJS +=	surface.o
 OBJS +=	rendersurface.o
@@ -206,7 +213,7 @@ OBJS +=	libxmtap.o
 OBJS +=	sjpcm_rpc.o 
 OBJS +=	cdvd_rpc.o 
 OBJS +=	ps2dma.o 
-OBJS +=	mcsave_ee.o 
+#OBJS +=	mcsave_ee.o 
 OBJS +=	sjpcmbuffer.o
 OBJS +=	gslist.o
 OBJS +=	gpprim.o
@@ -303,19 +310,21 @@ endif
 EE_DEFINES  = $(EE_BUILDDEFINES) -DPS2_EE -D_EE -DLSB_FIRST -DALIGN_DWORD -DCODE_PLATFORM=3
 
 EE_AFLAGS   = -EL -ahlsm 
-EE_CFLAGS   = -G0 -O2 -EL -pipe -Wall -Werror -Wa,-al -fomit-frame-pointer -fstrict-aliasing -fno-common -ffreestanding -fno-builtin -fshort-double -mlong64 -mhard-float -mno-abicalls
+EE_CFLAGS   = -G0 -O2 -EL -pipe -Wall -Wa,-al -fomit-frame-pointer -fstrict-aliasing -fno-common -ffreestanding -fno-builtin -mhard-float -mno-abicalls
+#old: -fshort-double -mlong64 -Werror
 EE_CPPFLAGS = -fno-exceptions -fno-common -fno-rtti
 EE_LDFLAGS  = -nostartfiles -T$(LINKFILE) -Wl,-Map,SNESticle.map 
-EE_LIBDIRS  = -L$(EE_BASE)/ee/lib -L$(PS2LIB_BASE)/ee/lib -L$(PS2IP_BASE)/ee/lib -L. 
-EE_INCS     = $(PS2LIB_EE_INCS) $(PS2IP_EE_INCS)
+#EE_LIBDIRS  = -L$(EE_BASE)/ee/lib -L$(PS2LIB_BASE)/ee/lib -L$(PS2IP_BASE)/ee/lib -L. 
+EE_LIBDIRS   = -L$(PS2SDK)/ee/lib 
+EE_INCS     = $(PS2LIB_EE_INCS) $(PS2IP_EE_INCS) $(INCLUDE) -I$(PS2SDK)/common/include -I$(PS2SDK)/ee/include -I$(PS2SDK)/ports/include -I$(GSKIT)/include -I$(GSKIT)/ee/dma/include -I$(GSKIT)/ee/gs/include -I$(GSKIT)/ee/toolkit/include
 
 
 ifeq ($(EE_GCC_VERSION), 3.2.2-b1)
 EE_AFLAGS   += -march=r5900 -mtune=r5900
 EE_CFLAGS   += -march=r5900	-mtune=r5900
 else
-EE_AFLAGS   += -mcpu=r5900 
-EE_CFLAGS   += -mcpu=r5900  -mips3
+EE_AFLAGS   += -march=r5900  
+EE_CFLAGS   += -march=r5900  -mips3
 endif
 
 
@@ -362,8 +371,8 @@ relink: clean_target $(TARGET)
 #
 # modules
 #
-
-modules: netplay sjpcm mcsave cdvd
+#mcsave
+modules: netplay sjpcm cdvd
 
 netplay:
 	make -C $(MODULE_BASE)/netplay/project/ps2
@@ -457,7 +466,9 @@ clean:
 	rm -f $(BUILD_DIR)/*.inc
 	rm -f $(BUILD_DIR)/*.s
 	rm -f $(BUILD_DIR)/*.elf
-
+	rm -f $(BUILD_DIR)/*.lst
+	rm -f $(BUILD_DIR)/*.sp
+	rm -f $(BUILD_DIR)/*.map
 
 $(BUILD_DIR)/%.d: %.s 
 	@echo Building dependencies $<...

@@ -4,7 +4,7 @@
 #include "snmaskop.h"
  
 
-void SNMaskLeft(SNMaskT *pMask, Int32 iPos)
+void SNMaskLeft(union SNMaskT *pMask, Int32 iPos)
 {
     Int32 nWords;
     Uint32 uMask;
@@ -31,7 +31,7 @@ void SNMaskLeft(SNMaskT *pMask, Int32 iPos)
 }
 
 
-void SNMaskRight(SNMaskT *pMask, Int32 iPos)
+void SNMaskRight(union SNMaskT *pMask, Int32 iPos)
 {
     Int32 nWords;
     Uint32 uMask;
@@ -57,7 +57,7 @@ void SNMaskRight(SNMaskT *pMask, Int32 iPos)
 	pDest[0] = uMask;
 }
 
-void SNMaskSHL(SNMaskT *pDestMask,  const Uint8 *pSrcMask, Int32 nBits)
+void SNMaskSHL(union SNMaskT *pDestMask,  const Uint8 *pSrcMask, Int32 nBits)
 {
 	Int32 nInvBits;
     Uint64 uSrc0, uSrc1, uSrc2, uSrc3, uSrc4;
@@ -66,7 +66,7 @@ void SNMaskSHL(SNMaskT *pDestMask,  const Uint8 *pSrcMask, Int32 nBits)
 
 	if (nBits==0)
 	{
-		SNMaskCopy(pDestMask, ( const SNMaskT *)pSrc);
+		SNMaskCopy(pDestMask, ( const union SNMaskT *)pSrc);
 		return;
 	}
 
@@ -91,7 +91,7 @@ void SNMaskSHL(SNMaskT *pDestMask,  const Uint8 *pSrcMask, Int32 nBits)
 
 
 
-void SNMaskSHR(SNMaskT *pDestMask,  const Uint8 *pSrcMask, Int32 nBits)
+void SNMaskSHR(union SNMaskT *pDestMask,  const Uint8 *pSrcMask, Int32 nBits)
 {
 	Int32 nInvBits;
     Uint64 uSrc0, uSrc1, uSrc2, uSrc3;
@@ -100,7 +100,7 @@ void SNMaskSHR(SNMaskT *pDestMask,  const Uint8 *pSrcMask, Int32 nBits)
 
 	if (nBits==0)
 	{
-		SNMaskCopy(pDestMask, ( const SNMaskT *)pSrc);
+		SNMaskCopy(pDestMask, ( const union SNMaskT *)pSrc);
 		return;
 	}
 
@@ -123,10 +123,10 @@ void SNMaskSHR(SNMaskT *pDestMask,  const Uint8 *pSrcMask, Int32 nBits)
 }
 
 
-void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
+void SNMaskRange(union SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, Bool bInvert)
 {
-	SNMaskT LeftMask;
-	SNMaskT RightMask;
+	union SNMaskT LeftMask;
+	union SNMaskT RightMask;
 
 	if (bInvert)
 	{
@@ -162,7 +162,7 @@ void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
 
 #if !SNMASKOP_INLINE
 
- void SNMaskClear(SNMaskT *pDest)
+ void SNMaskClear(union SNMaskT *pDest)
 {
     __asm__ __volatile__ (
     	"sq        $0,0x00(%0)     \n"
@@ -172,7 +172,7 @@ void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
      );    
 }
 
- void SNMaskSet(SNMaskT *pDest)
+ void SNMaskSet(union SNMaskT *pDest)
 {
     __asm__ __volatile__ (
         "pnor      $8,$0,$0        \n"
@@ -186,7 +186,7 @@ void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
 }
 
 
- void SNMaskCopy(SNMaskT *pDest,  const SNMaskT *pSrc)
+ void SNMaskCopy(union SNMaskT *pDest,  const union SNMaskT *pSrc)
 {
 	// 0
     __asm__ __volatile__ (
@@ -201,7 +201,7 @@ void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
 }
 
 
- void SNMaskNOT(SNMaskT *pDest,  const SNMaskT *pSrc)
+ void SNMaskNOT(union SNMaskT *pDest,  const union SNMaskT *pSrc)
 {
 	// 0  1
 	// 1  0
@@ -219,7 +219,7 @@ void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
      );    
 }
 
- void SNMaskAND(SNMaskT *pDest,  const SNMaskT *pSrcA,  const SNMaskT *pSrcB)
+ void SNMaskAND(union SNMaskT *pDest,  const union SNMaskT *pSrcA,  const union SNMaskT *pSrcB)
 {
 	// 00 0
 	// 01 0
@@ -240,7 +240,7 @@ void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
      );    
 }
 
- void SNMaskANDN(SNMaskT *pDest,  const SNMaskT *pSrcA,  const SNMaskT *pSrcB)
+ void SNMaskANDN(union SNMaskT *pDest,  const union SNMaskT *pSrcA,  const union SNMaskT *pSrcB)
 {
 	// 00 0
 	// 01 0
@@ -264,7 +264,7 @@ void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
 }
 
 
- void SNMaskOR(SNMaskT *pDest,  const SNMaskT *pSrcA,  const SNMaskT *pSrcB)
+ void SNMaskOR(union SNMaskT *pDest,  const union SNMaskT *pSrcA,  const union SNMaskT *pSrcB)
 {
 	// 00 0
 	// 01 1
@@ -285,7 +285,7 @@ void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
      );    
 }
 
- void SNMaskXOR(SNMaskT *pDest,  const SNMaskT *pSrcA,  const SNMaskT *pSrcB)
+ void SNMaskXOR(union SNMaskT *pDest,  const union SNMaskT *pSrcA,  const union SNMaskT *pSrcB)
 {
 	// 00 0
 	// 01 1
@@ -306,7 +306,7 @@ void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
      );    
 }
 
- void SNMaskXNOR(SNMaskT *pDest,  const SNMaskT *pSrcA,  const SNMaskT *pSrcB)
+ void SNMaskXNOR(union SNMaskT *pDest,  const union SNMaskT *pSrcA,  const union SNMaskT *pSrcB)
 {
 	// 00 1
 	// 01 0
@@ -329,7 +329,7 @@ void SNMaskRange(SNMaskT *pMask, Uint32 uLeft, Uint32 uRight, bool bInvert)
      );    
 }
 
- void SNMaskBool(SNMaskT *pDest,  const SNMaskT *pSrc, bool bVal)
+ void SNMaskBool(union SNMaskT *pDest,  const union SNMaskT *pSrc, Bool bVal)
 {
 	// if bVal==true, then set bits of src in dest
 	// if bVal==false, then clear bits of src in dest

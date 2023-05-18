@@ -2,6 +2,7 @@
 //#include <sys/stat.h>
 //#include <stdlib.h>
 //#include <stdio.h>
+#define NEWLIB_PORT_AWARE
 #include <fileio.h>
 #include "types.h"
 #include "file.h"

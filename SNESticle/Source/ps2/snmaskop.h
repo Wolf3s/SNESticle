@@ -3,7 +3,7 @@
 #ifndef _SNMASKOP_H
 #define _SNMASKOP_H
 
-
+#ifndef PS2_EE
 #define SNMASKOP_INLINE (TRUE)
 #define SNMASKOP_ASSEMBLY (TRUE)
 
@@ -393,5 +393,5 @@ static inline void SNMaskBool(SNMaskT *pDest,  const SNMaskT *pSrc, bool bVal)
 }
 
 #endif
-
+#endif
 #endif

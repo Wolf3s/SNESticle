@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include "types.h"
 #include "console.h"
+#if 0
 #include "msgnode.h"
 
-#if 0
+
 CMsgNode	_Console_Stdin;
 CMsgStdout	_Console_Stdout;
 

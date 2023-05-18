@@ -4,6 +4,7 @@
 #include <sifrpc.h>
 #include <loadfile.h>
 #include <kernel.h>
+#define NEWLIB_PORT_AWARE
 #include <fileio.h>
 #include <iopheap.h>
 #include <iopcontrol.h>

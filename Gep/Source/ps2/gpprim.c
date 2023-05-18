@@ -3,7 +3,7 @@
 #include <tamtypes.h>
 #include <kernel.h>
 #include "types.h"
-#include "gs.h"
+#include <gs.h>
 #include "gslist.h"
 #include "gpfifo.h"
 #include "gpprim.h"
@@ -25,8 +25,6 @@ void GPPrimRect(unsigned x1, unsigned y1, unsigned c1, unsigned x2, unsigned y2,
 	GSGifReg(GS_SET_XYZ(x2,y2,z));
     
     GSGifTagClose();
-
-
 }
 
 

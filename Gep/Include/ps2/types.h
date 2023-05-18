@@ -43,8 +43,11 @@ typedef char			Char;
 typedef unsigned char   Bool;
 typedef float			Float32;
 typedef double			Float64;
-
+#ifdef PS2_EE
+typedef unsigned long long Uint64;
+#else
 typedef unsigned long int Uint64;
+#endif
 typedef signed long int   Int64;
 
 typedef unsigned int      Uint128 __attribute__(( mode(TI) ));

@@ -1,4 +1,5 @@
 
+#if 0
 #include "version.h"
 
 
@@ -56,3 +57,4 @@ char * VersionGetElfName()
 	return _Version_Info.ElfName;
 }
 
+#endif

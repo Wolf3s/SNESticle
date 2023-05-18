@@ -64,7 +64,11 @@ local int
 unzlocal_getShort (FILE * fin, uLong * pX)
 {
     uLong           x;
+#ifdef PS2_EE
+	int 			i = 0;
+#else
     int             i;
+#endif
     int             err;
 
     err = unzlocal_getByte (fin, &i);
@@ -85,7 +89,11 @@ local int
 unzlocal_getLong (FILE * fin, uLong * pX)
 {
     uLong           x;
+#ifdef PS2_EE
+	int             i = 0;
+#else
     int             i;
+#endif
     int             err;
 
     err = unzlocal_getByte (fin, &i);
@@ -258,7 +266,7 @@ unzOpen (const char *path)
 
     fin = fopen (path, "rb");
     if (fin == NULL)
-	return NULL;
+		return NULL;
 
 	setvbuf(fin, NULL, _IOFBF, 16*1024);
 
