@@ -30,12 +30,11 @@ jobs:
            dir
            msbuild win32_2022.vcxproj -m /property:Configuration=Release /property:Platform=x64 /verbosity:minimal           
     - name: upload
-      uses: "marvinpinto/action-automatic-releases@latest"
+      uses: "actions/upload-artifact@v3"
       with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: true
-          title: "Development Build"
+          name: "Development Build"
           files: |
             Release/*.exe
             x64/Release/*.exe
