@@ -1914,11 +1914,9 @@ static void _FetchMode7Opaque(Uint8 *pMask, Uint8 *pLine, Int32 nPixels)
 static void _FetchMode7(Uint8 *pLine, SnesPPU *pPPU, Int32 iLine, SNMaskT *pPriority, SNMaskT *pOpaque)
 {
 	const SnesPPURegsT *pRegs = pPPU->GetRegs();
-	Int32 nPixels;
 	Int32 x1, y1,x,y;
 	Int32 m7a,m7b,m7c,m7d,m7x,m7y;
 	Uint8 *pVram;
-	nPixels=256;
 
 	pVram = (Uint8 *)pPPU->GetVramPtr(0);
 

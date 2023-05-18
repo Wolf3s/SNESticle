@@ -124,9 +124,9 @@ static NesSystem  *_pNes;
 static NesRom	  *_pNesRom;
 static NesFDSBios  *_pNesFDSBios;
 static NesDisk	  *_pNesFDSDisk;
-#endif
 static Int32 _MainLoop_iDisk=0;
 static Bool _MainLoop_bDiskInserted=FALSE;
+#endif
 static Char _RomName[256];
 
 #if MAINLOOP_MEMCARD
@@ -3033,9 +3033,7 @@ static void _MenuDraw()
 
 
     t_ip_info config;
-    Bool bConfig;
     memset(&config, 0, sizeof(config));
-    bConfig = ps2ip_getconfig("sm1",&config);
 
 	// draw current screen
 	if (_MainLoop_pScreen)

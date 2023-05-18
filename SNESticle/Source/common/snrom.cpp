@@ -303,12 +303,13 @@ SNRomInfoT *SnesRom::GetCartInfo(Uint32 uOffset)
 
 void SnesRom::SetCartInfo(SNRomInfoT *pCartInfo)
 {
-	SNRomLicenseT *pLicense;
-	SNRomCountryT *pCountry;
 
 	m_pCartInfo = pCartInfo;
 	if (pCartInfo)
 	{
+		SNRomLicenseT* pLicense;
+		SNRomCountryT* pCountry;
+
 		pCountry = _SNRomGetCountry(pCartInfo->Country);
 		pLicense = _SNRomGetLicense(pCartInfo->License);
 

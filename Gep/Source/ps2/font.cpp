@@ -353,10 +353,10 @@ static Bool _FontScanVertWhite(CSurface *pSurface, Uint32 uStartY, Uint32 uEndY,
 Char *_FontParseLine(FontT *pFont, CSurface *pSurface, Char *pCharList, Uint32 uStartY, Uint32 uEndY)
 {
     Uint32 uX;
-    Uint32 uWidth, uHeight;
+    Uint32 uWidth;//, uHeight;
 
     uWidth = pSurface->GetWidth();
-    uHeight = pSurface->GetHeight();
+    //uHeight = pSurface->GetHeight();
 
     uX = 0;
     while (uX < uWidth)

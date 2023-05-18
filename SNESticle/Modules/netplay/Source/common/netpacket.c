@@ -56,8 +56,12 @@ NetPacketHdrT *NetPacketRecv(NetSocketT *pSocket, char *pBuffer, int BufferLen)
     recvlen = NetSocketRecvBytes(pSocket, (char *)pPacketHdr, sizeof(NetPacketHdrT), 0);
     if (recvlen <= 0)
     {
-         NetPrintf("NetPacket: socket died %d %d\n", pSocket->socket, recvlen);
-        // socket died
+#ifdef _WIN64
+        NetPrintf("NetPacket: socket died %lld %d\n", pSocket->socket, recvlen);
+#else
+        NetPrintf("NetPacket: socket died %d %d\n", pSocket->socket, recvlen);
+#endif
+         // socket died
         return NULL;
     }
 
@@ -81,8 +85,12 @@ NetPacketHdrT *NetPacketRecv(NetSocketT *pSocket, char *pBuffer, int BufferLen)
 		if (recvlen <= 0)
 		{
 			// socket died
-             NetPrintf("NetPacket: socket died2 %d %d\n", pSocket->socket, recvlen);
-			return NULL;
+#ifdef _WIN64
+            NetPrintf("NetPacket: socket died2 %lld %d\n", pSocket->socket, recvlen);
+#else
+            NetPrintf("NetPacket: socket died2 %d %d\n", pSocket->socket, recvlen);
+#endif
+             return NULL;
 		}
 	}
 

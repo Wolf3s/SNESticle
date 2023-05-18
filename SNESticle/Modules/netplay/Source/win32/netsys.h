@@ -5,6 +5,15 @@
 // ugh
 #include <windows.h>
 
+typedef struct
+{
+	unsigned char  sin_len;
+	unsigned char  sin_family;
+	unsigned short sin_port;
+	unsigned int   sin_addr;
+	char           sin_zero[8];
+} NetSocketAddrT;
+
 typedef HANDLE NetSysSemaT;
 typedef int NetSysThreadT;
 
