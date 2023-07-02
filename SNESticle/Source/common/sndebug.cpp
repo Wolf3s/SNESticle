@@ -1,6 +1,3 @@
-
-
-
 #include <stdio.h>
 #include <stdarg.h>
 #include "types.h"
@@ -11,6 +8,9 @@
 
 static SnesSystem *_Snes_pDebugSnes;
 static FILE *_Snes_pDebugFile;
+
+void SnesDebugBegin(SnesSystem* pSnes, const char* pFileName);
+void SnesDebugEnd();
 
 extern "C" {
 #if 1
