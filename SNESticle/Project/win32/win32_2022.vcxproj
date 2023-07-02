@@ -292,12 +292,6 @@
     <Text Include="..\..\todo.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Gep\Project\win32\gepwin32.vcxproj">
-      <Project>{c0cc6cf1-2c76-411f-be95-466f56d9c28d}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\Source\win32\resource\anicurso.bin" />
     <None Include="..\..\Source\win32\Resource\unnamed.ani" />
   </ItemGroup>

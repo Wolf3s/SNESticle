@@ -123,5 +123,8 @@ private:
     void    ExecuteCPU(Int32 nExecCycles);
 };
 
+void SnesDebugBegin(SnesSystem* pSnes, const char* pFileName);
+void SnesDebugEnd();
+
 #endif
 

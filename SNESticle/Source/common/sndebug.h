@@ -6,13 +6,13 @@
 #ifndef _SNDEBUG_H
 #define _SNDEBUG_H
 
-#define SNES_DEBUG (CODE_DEBUG && (CODE_PLATFORM==CODE_WIN32) && 1)
+//#define SNES_DEBUG (CODE_DEBUG && (CODE_PLATFORM==CODE_WIN32) && 1)
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-#if SNES_DEBUG
+#ifdef SNES_DEBUG
 void SnesDebug(const char *pFormat, ...);
 void SnesDebugRead(Uint32 uAddr);
 void SnesDebugReadData(Uint32 uAddr, Uint8 uData);

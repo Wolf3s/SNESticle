@@ -696,7 +696,7 @@ SnesPPU::SnesPPU()
 	m_pRender = NULL;
 }
 
-#if SNES_DEBUG
+#ifdef SNES_DEBUG
 
 static char *SnesPPU::GetRegName(Uint32 uAddr)
 {

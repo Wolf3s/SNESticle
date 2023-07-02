@@ -312,7 +312,7 @@ static SNPPUColorCalibT _ColorCalib =
 	0.2f
 };
 
-CSnesWin::CSnesWin()
+CSnesWin::CSnesWin() : m_State(), m_uScreenShot(0), m_Name()
 {
 	Create(_SnesWin_ClassName, _SnesWin_AppName, WS_OVERLAPPEDWINDOW & (~WS_SIZEBOX) & (~WS_MAXIMIZEBOX), MAKEINTRESOURCE(IDR_MENU1));
 	CreateStatusBar();
@@ -330,7 +330,7 @@ CSnesWin::CSnesWin()
 	m_pDevice[2] = NULL;
 	m_pDevice[3] = NULL;
 	m_pDevice[4] = NULL;
-	
+
 	m_Snes.Reset();
 	m_eState = SNESWIN_STATE_IDLE;
 
@@ -410,10 +410,6 @@ void CSnesWin::ReadInput(Emu::SysInputT *pInput)
 	}
 }
 static SnesStateT _TestState[3];
-
-int SNSPCExecute_9X(SNSpcT *pSpc);
-
-int SNCPUExecute_9X(SNCpuT *pCpu);
 
 Bool g_bStateDebug = FALSE;
 
