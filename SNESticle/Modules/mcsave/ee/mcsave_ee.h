@@ -17,7 +17,7 @@ int MCSave_Write(char *pPath, char *pData, int nBytes);
 int MCSave_WriteSync(int bSync, int *pResult);
 void MCSave_Shutdown();
 int MCSave_IsInitialized();
-#ifdef PS2_EE
+#ifdef _EE
 int MCSave_Dread(int fd, io_dirent_t *dir);
 #else
 int MCSave_Dread(int fd, fio_dirent_t *dir);

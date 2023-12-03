@@ -57,7 +57,7 @@ int MemCardCreateSave(char *pDir, char *pTitle, Bool bForceWrite)
 
 	memset(&icon_sys, 0, sizeof(mcIcon));
 	strcpy((char *)icon_sys.head, "PS2D");
-#ifdef PS2_EE	
+#ifdef _EE	
 	strcpy((char*)&icon_sys.title, (const char*)pTitle);
 #else
 	strcpy_sjis((short *)&icon_sys.title, pTitle);

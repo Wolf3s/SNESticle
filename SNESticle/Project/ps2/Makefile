@@ -80,7 +80,7 @@ PS2IP_EE_INCS      =  -I$(PS2IP_BASE)/include
 #
 
 TARGET   	= SNESticle.elf
-LIBS     	= -lmc -lpad -lps2ip -lkernel -lc -lm  -ldebug
+LIBS     	= -lmc -lpad -lps2ip -lkernel -lc -lm -ldebug
 ifneq ($(EE_GCC_VERSION), 2.9)
 LIBS       += -lstdc++
 endif
@@ -89,7 +89,7 @@ ifneq ($(EE_GCC_VERSION), 3.2.2)
 LIBS       += -lgcc
 endif
 
-LINKFILE    = ../linkfile
+LINKFILE    = $(PS2SDK)/ee/startup/linkfile
 
 CDDATAPATH	  = /cygdrive/z/iso/SNESticle
 PKSHPATH      = /cygdrive/c/dev/bin/i686-pc-cygwin/pksh
@@ -101,7 +101,7 @@ ISOPATH 	  = c:/iso/SNESticle.iso
 MODULE_BASE = ../../Modules
 GEPDIR   	= ../../../Gep
 SNESSOURCE 	= ../../Source
-NESSOURCE 	= ../../../NESticle/Source
+#NESSOURCE 	= ../../../NESticle/Source
 
 #
 # Source search paths
@@ -115,9 +115,7 @@ SOURCE += $(GEPDIR)/Source/common
 SOURCE += $(GEPDIR)/Source/common/console
 SOURCE += $(SNESSOURCE)/ps2
 SOURCE += $(SNESSOURCE)/common
-SOURCE += $(NESSOURCE)/ps2
-SOURCE += $(NESSOURCE)/common/ncpu
-SOURCE += $(NESSOURCE)/common
+
 SOURCE += $(MODULE_BASE)/mcsave/ee
 SOURCE += $(MODULE_BASE)/sjpcm/ee
 SOURCE += $(MODULE_BASE)/netplay/Source/ps2/common
@@ -152,7 +150,7 @@ INCLUDE+= -I$(BUILD_DIR)
 DATAOBJS = memcard_icon.inc # 
 
 OBJS = 
-OBJS +=	crt0.o
+#OBJS +=	crt0.o
 OBJS +=	main.o
 #OBJS +=	excepHandler.o
 OBJS +=	exceptions.o
@@ -166,15 +164,14 @@ OBJS +=	memspace.o
 OBJS +=	inputdevice.o 
 OBJS +=	console.o 
 #OBJS +=	linebuffer.o 
-#OBJS +=	msgnode.o
 OBJS +=	bmpfile.o
 OBJS +=	mixbuffer.o
 OBJS +=	wavfile.o
 OBJS +=	dataio.o
 OBJS +=	pathext.o
-# OBJS += font.o
-# OBJS += poly.o
-# OBJS += texture.o
+OBJS += font.o
+OBJS += poly.o
+OBJS += texture.o
 
 OBJS +=	adler32.o 
 OBJS +=	compress.o 
@@ -241,7 +238,7 @@ OBJS +=	memcard.o
 OBJS +=	emurom.o 
 OBJS +=	emusys.o 
 OBJS +=	emumovie.o
-#OBJS +=	emushell.o 
+OBJS += emushell.o 
 
 #
 # SNES objects
@@ -263,14 +260,13 @@ OBJS +=	snesreg.o
 OBJS +=	sn65816.o 
 OBJS +=	snmemmap.o 
 
-#OBJS +=	snppublend_c.o 
-#OBJS +=	snppublend_mm.o 
+OBJS +=	snppublend_c.o 
+OBJS +=	snppublend_mm.o 
 OBJS +=	snppucolor.o 
 OBJS +=	snppublend_gs.o 
 
 OBJS +=	snppurender.o 
 OBJS +=	snppurender8.o 
-# OBJS +=	snppurender8p.o 
 OBJS +=	snppubg.o 
 OBJS +=	snppuobj.o 
 
@@ -281,7 +277,6 @@ OBJS +=	snspcdsp.o
 OBJS +=	snspcmix.o 
 OBJS +=	snspcbrr.o 
 OBJS +=	snspc.o 
-#OBJS +=	snspc700.o 
 
 OBJS +=	snmask128.o 
 OBJS +=	snspcrom.o 
@@ -307,7 +302,7 @@ endif
 endif    
 endif    
 
-EE_DEFINES  = $(EE_BUILDDEFINES) -DPS2_EE -D_EE -DLSB_FIRST -DALIGN_DWORD -DCODE_PLATFORM=3
+EE_DEFINES  = $(EE_BUILDDEFINES) -DPS2_EE -DLSB_FIRST -DALIGN_DWORD -DCODE_PLATFORM=3
 
 EE_AFLAGS   = -EL -ahlsm 
 EE_CFLAGS   = -G0 -O2 -EL -pipe -Wall -Wa,-al -fomit-frame-pointer -fstrict-aliasing -fno-common -ffreestanding -fno-builtin -mhard-float -mno-abicalls
@@ -316,7 +311,7 @@ EE_CPPFLAGS = -fno-exceptions -fno-common -fno-rtti
 EE_LDFLAGS  = -nostartfiles -T$(LINKFILE) -Wl,-Map,SNESticle.map 
 #EE_LIBDIRS  = -L$(EE_BASE)/ee/lib -L$(PS2LIB_BASE)/ee/lib -L$(PS2IP_BASE)/ee/lib -L. 
 EE_LIBDIRS   = -L$(PS2SDK)/ee/lib 
-EE_INCS     = $(PS2LIB_EE_INCS) $(PS2IP_EE_INCS) $(INCLUDE) -I$(PS2SDK)/common/include -I$(PS2SDK)/ee/include -I$(PS2SDK)/ports/include -I$(GSKIT)/include -I$(GSKIT)/ee/dma/include -I$(GSKIT)/ee/gs/include -I$(GSKIT)/ee/toolkit/include
+EE_INCS     = $(INCLUDE) -I$(PS2SDK)/common/include -I$(PS2SDK)/ee/include -I$(PS2SDK)/ports/include -I$(GSKIT)/include -I$(GSKIT)/ee/dma/include -I$(GSKIT)/ee/gs/include -I$(GSKIT)/ee/toolkit/include
 
 
 ifeq ($(EE_GCC_VERSION), 3.2.2-b1)
@@ -326,9 +321,6 @@ else
 EE_AFLAGS   += -march=r5900  
 EE_CFLAGS   += -march=r5900  -mips3
 endif
-
-
-#
 
 vpath %.d ./$(BUILD_DIR)
 vpath %.o ./$(BUILD_DIR)
@@ -371,8 +363,8 @@ relink: clean_target $(TARGET)
 #
 # modules
 #
-#mcsave
-modules: netplay sjpcm cdvd
+
+modules: netplay sjpcm cdvd mcsave
 
 netplay:
 	make -C $(MODULE_BASE)/netplay/project/ps2
@@ -470,6 +462,16 @@ clean:
 	rm -f $(BUILD_DIR)/*.sp
 	rm -f $(BUILD_DIR)/*.map
 
+clean_normal:
+	rm -f *.d 
+	rm -f *.o 
+#	rm -f $(BUILD_DIR)/*.inc
+#	rm -f $(BUILD_DIR)/*.s
+#	rm -f $(BUILD_DIR)/*.elf
+#	rm -f $(BUILD_DIR)/*.lst
+#	rm -f $(BUILD_DIR)/*.sp
+#	rm -f $(BUILD_DIR)/*.map
+
 $(BUILD_DIR)/%.d: %.s 
 	@echo Building dependencies $<...
 	@touch $@
@@ -515,3 +517,5 @@ run: relink $(TARGET)
 # dependencies
 #
 include $(OBJS:%.o=$(BUILD_DIR)/%.d)
+include $(PS2SDK)/samples/Makefile.pref
+include $(PS2SDK)/samples/Makefile.eeglobal 

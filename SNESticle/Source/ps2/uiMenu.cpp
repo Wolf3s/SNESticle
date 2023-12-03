@@ -3,7 +3,11 @@
 #include <kernel.h>
 #include <libpad.h>
 #include "types.h"
+#if 0
 #include "font.h"
+#else
+#include "../../../Gep/Include/ps2/font.h"
+#endif
 #include "poly.h"
 #include "uiMenu.h"
 

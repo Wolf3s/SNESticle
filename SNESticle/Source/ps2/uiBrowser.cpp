@@ -7,7 +7,11 @@
 #include "types.h"
 #define NEWLIB_PORT_AWARE
 #include "fileio.h"
+#if 0
 #include "font.h"
+#else
+#include "../../../Gep/Include/ps2/font.h"
+#endif
 #include "poly.h"
 #include "uiBrowser.h"
 extern "C" {
@@ -445,7 +449,7 @@ void CBrowserScreen::Input(Uint32 buttons, Uint32 trigger)
 }
 
 
-#ifdef PS2_EE
+#ifdef _EE
 static int _BrowserDread(int fd, io_dirent_t *dirent)
 #else
 static int _BrowserDread(int fd, fio_dirent_t *dirent)
@@ -485,7 +489,7 @@ void CBrowserScreen::SetDir(Char *pDir)
 		if (fd >= 0)
 		{
 			static Uint8 dirbuf[512] __attribute__((aligned(64)));
-#ifdef PS2_EE
+#ifdef _EE
 			io_dirent_t *dirent = (io_dirent_t *)&dirbuf;
 #else
 			fio_dirent_t *dirent = (fio_dirent_t *)&dirbuf;

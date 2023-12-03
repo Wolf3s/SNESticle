@@ -9,6 +9,7 @@
 #include "dataio.h"
 #include "pathext.h"
 
+#ifdef WIP
 EmuShellSysID CEmuShell::ResolveSysByPath(char *pPath, Bool *pbCompressed)
 {
 	char str[256];
@@ -42,7 +43,7 @@ EmuShellSysID CEmuShell::ResolveSysByPath(char *pPath, Bool *pbCompressed)
 
 	return EMUSHELL_SYSID_INVALID;
 }
-
+#endif
 
 static void _EmuShellGetName(Char *pName, Char *pPath)
 {
@@ -172,7 +173,7 @@ CEmuShell::CEmuShell()
 {
 	m_pSystem = NULL;
 	m_pRom    = NULL;
-	m_pBois    = NULL;
+	m_pBios    = NULL;
 
 	m_RomName[0] = 0;
 	m_nMaxSaveChars = 32;
@@ -184,7 +185,7 @@ CEmuShell::~CEmuShell()
 {
 }
 
-void CEmuShell::RegisterSystem(CEmuSystem *pSystem, CEmuRom *pRom, CEmuRom *pBios)
+EmuShellSysT *CEmuShell::RegisterSystem(Emu::System *pSystem, Emu::Rom *pRom, Emu::Rom *pBios)
 {
 	EmuShellSysT *pShellSys = NULL;
 
@@ -200,39 +201,44 @@ void CEmuShell::RegisterSystem(CEmuSystem *pSystem, CEmuRom *pRom, CEmuRom *pBio
 	return pShellSys;
 }
 
-
+#ifdef WIP
 EmuShellSysID CEmuShell::GetSysIDByName(char *pName)
 {
-	EmuShellSysID idSys;
+	Int32 idSys;
 
 	for (idSys=0; idSys < m_nSystems; idSys++)
 	{
-		CEmuSystem *pSystem = GetSysByID(idSys);
-		if (!strcmp(pName, pSystem->GetString(EMUSYS_STRING_SHORTNAME)))
+		Emu::System *pSystem = GetSysByID(idSys);
+		if (!strcmp(pName, pSystem->GetString(Emu::System::STRING_SHORTNAME)))
 		{
 			return idSys;
 		}
 	}
 	return EMUSHELL_SYSID_INVALID;
 }
+#endif
 
 EmuShellSysT *CEmuShell::FindSysByExt(char *pExt)
 {
 	Int32 idys;
 
 	// iterate through all supported systems
-	for (iSys=0; iSys < m_nSystems; iSys++)
+	for (idys=0; idys < m_nSystems; idys++)
 	{
-		CEmuRom *pRom = m_Systems[iSys].pRom;
+		Emu::Rom *pRom = m_Systems[idys].pRom;
 		Uint32 uExt;
 
 		// see if rom supports this extension...
 		for (uExt=0; uExt < pRom->GetNumExts(); uExt++)
 		{
+#ifdef _EE
+			if (!strncmp(pExt, pRom->GetExtName(uExt), sizeof(pExt)))
+#else
 			if (!stricmp(pExt, pRom->GetExtName(uExt)))
+#endif
 			{
 				// it does!
-				return &m_Systems[iSys];
+				return &m_Systems[idys];
 			}
 		}
 	}
@@ -260,17 +266,19 @@ Bool CEmuShell::LoadRom(Char *pRomFile, Uint8 *pBuffer, Uint32 nBufferBytes)
 	// no system active
 	m_pSystem=NULL;
 	m_pRom   =NULL;
-
+#ifdef WIP
 	eType = ResolveSysByPath(pRomFile, &bCompressed);
 	if (eType == EMUSHELL_SYSID_INVALID) 
 	{
 		// unknown system type
 		return FALSE;
 	}
-
+#else
+	eType = 0;
+#endif
 	// set current system 
-	m_pSystem = m_pSystems[eType];
-	m_pRom    = m_pRoms[eType];
+	m_pSystem = m_Systems[eType].pSystem;
+	m_pRom    = m_Systems[eType].pRom;
 
     //_MainLoopResetHistory();
 	//_MainLoopResetInputChecksums();
@@ -285,7 +293,7 @@ Bool CEmuShell::LoadRom(Char *pRomFile, Uint8 *pBuffer, Uint32 nBufferBytes)
 		}
 
 	    CMemFileIO romfile;
-	    EmuRomLoadErrorE eError;
+	    Emu::Rom::LoadErrorE eError;
 
 	    // open memoryfile for rom data
 	    romfile.Open(pBuffer, nBytes);
@@ -294,7 +302,7 @@ Bool CEmuShell::LoadRom(Char *pRomFile, Uint8 *pBuffer, Uint32 nBufferBytes)
 	    eError = m_pRom->LoadRom(&romfile);
 	    romfile.Close();
 
-		if (eError!=EMUROM_LOADERROR_NONE)
+		if (eError!=Emu::Rom::LOADERROR_NONE)
 		{
 			return FALSE;
 		}

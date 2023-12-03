@@ -6,7 +6,11 @@
 #include "types.h"
 #define NEWLIB_PORT_AWARE
 #include "fileio.h"
+#if 0
 #include "font.h"
+#else
+#include "../../../Gep/Include/ps2/font.h"
+#endif
 #include "poly.h"
 #include "uiNetwork.h"
 extern "C" {

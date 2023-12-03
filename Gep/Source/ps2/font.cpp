@@ -4,8 +4,11 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "types.h"
+#if 0
 #include "font.h"
-#include "surface.h"
+#else
+#include "../../../Gep/Include/ps2/font.h"
+#endif
 #include "surface.h"
 extern "C" {
 #include "gs.h"

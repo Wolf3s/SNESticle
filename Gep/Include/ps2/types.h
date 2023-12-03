@@ -43,7 +43,7 @@ typedef char			Char;
 typedef unsigned char   Bool;
 typedef float			Float32;
 typedef double			Float64;
-#ifdef PS2_EE
+#ifdef _EE
 typedef unsigned long long Uint64;
 #else
 typedef unsigned long int Uint64;

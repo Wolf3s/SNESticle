@@ -3,7 +3,7 @@
 #ifndef _SNMASKOP_H
 #define _SNMASKOP_H
 
-#ifndef PS2_EE
+#ifndef _EE
 #define SNMASKOP_INLINE (TRUE)
 #define SNMASKOP_ASSEMBLY (TRUE)
 

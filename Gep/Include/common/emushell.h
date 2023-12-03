@@ -2,25 +2,24 @@
 #ifndef _EMUSHELL_H
 #define _EMUSHELL_H
 
-class CEmuSystem;
-class CEmuRom;
+#include "emusys.h"
+#include "emurom.h"
 
 #define EMUSHELL_MAX_SYSTEMS (8)
 
 struct EmuShellSysT
 {
-	CEmuSystem	*pSystem;
-	CEmuRom		*pRom;
-	CEmuRom		*pBios;
+	Emu::System	*pSystem;
+	Emu::Rom		*pRom;
+	Emu::Rom		*pBios;
 };
-
 
 class CEmuShell
 {
 protected:
-	CEmuSystem  	*m_pSystem;		// current active system
-	CEmuRom  		*m_pRom;		// current active rom
-	CEmuRom  		*m_pBios;		// current active bios
+	Emu::System  	*m_pSystem;		// current active system
+	Emu::Rom  		*m_pRom;		// current active rom
+	Emu::Rom  		*m_pBios;		// current active bios
 
 	Uint32			m_nMaxSaveChars;
     Char 			m_RomName[256];		// base rom filename "Super Mario World"
@@ -41,11 +40,12 @@ public:
 
 	EmuShellSysT *FindSysByExt(char *pExt);
 
-	EmuShellSysT *RegisterSystem(CEmuSystem *pSystem, CEmuRom *pRom, CEmuRom *pBios);
+	EmuShellSysT *RegisterSystem(Emu::System *pSystem, Emu::Rom *pRom, Emu::Rom *pBios);
 
 	void SetRomFileName(Char *pFileName);
 	Char *GetRomName() {return m_RomName;}
 	Char *GetSaveName() {return m_SaveName;}
+	int ReadFileData(Uint8 *pBuffer, Int32 nBufferBytes, char *pRomFile, Bool bCompressed);
 };
 
 #endif
