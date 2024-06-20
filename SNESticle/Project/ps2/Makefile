@@ -9,12 +9,12 @@
 
 #export EE_GCC_VERSION  ?= 3.2.2
 #export EE_GCC_VERSION  ?= 3.2.2-b1
-export EE_GCC_VERSION   ?= 11.3.0
+export EE_GCC_VERSION   ?= 14.1.0
 
 #export IOP_GCC_VERSION ?= 2.8.1
-export IOP_GCC_VERSION ?= 11.3.0
+export IOP_GCC_VERSION ?= 14.1.0
 #export DVP_GCC_VERSION ?= 3.2.2-beta
-export DVP_GCC_VERSION ?= 11.3.0
+export DVP_GCC_VERSION ?= 14.1.0
 
 #
 # Toolchain configuration
