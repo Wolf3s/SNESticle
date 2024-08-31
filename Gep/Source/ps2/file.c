@@ -2,8 +2,6 @@
 //#include <sys/stat.h>
 //#include <stdlib.h>
 //#include <stdio.h>
-#define NEWLIB_PORT_AWARE
-#include <fileio.h>
 #include "types.h"
 #include "file.h"
 
@@ -26,14 +24,14 @@ Bool FileReadMem(Char *pFilePath, void *pMem, Uint32 nBytes)
 	int hFile;
 	unsigned int nReadBytes;
 
-	hFile = fioOpen(pFilePath, O_RDONLY);
+	hFile = open(pFilePath, O_RDONLY);
 	if (hFile < 0)
 	{
 		return FALSE;
 	}
 
-	nReadBytes = fioRead(hFile, pMem, nBytes);
-	fioClose(hFile);
+	nReadBytes = read(hFile, pMem, nBytes);
+	close(hFile);
 	
 	return (nReadBytes == nBytes);
     #endif
@@ -58,14 +56,14 @@ Bool FileWriteMem(Char *pFilePath, void *pMem, Uint32 nBytes)
 	int hFile;
 	unsigned int nWriteBytes;
 
-	hFile = fioOpen(pFilePath, O_CREAT | O_WRONLY);
+	hFile = open(pFilePath, O_CREAT | O_WRONLY);
 	if (hFile < 0)
 	{
 		return FALSE;
 	}
 
-	nWriteBytes = fioWrite(hFile, pMem, nBytes);
-	fioClose(hFile);
+	nWriteBytes = write(hFile, pMem, nBytes);
+	close(hFile);
 	
 	return (nWriteBytes == nBytes);
     #endif
@@ -90,13 +88,13 @@ Bool FileExists(Char *pFilePath)
 
 	int hFile;
 
-	hFile = fioOpen(pFilePath, O_RDONLY);
+	hFile = open(pFilePath, O_RDONLY);
 	if (hFile < 0)
 	{
 		return FALSE;
 	}
 
-	fioClose(hFile);
+	close(hFile);
 	return TRUE;
 
     #endif

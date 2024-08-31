@@ -3,9 +3,9 @@
 #include <libmc.h>
 #include <stdio.h>
 #include <string.h>
-#define NEWLIB_PORT_AWARE
-#include <fileio.h>
 #include "types.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "memcard.h"
 
@@ -43,7 +43,7 @@ int MemCardCreateSave(char *pDir, char *pTitle, Bool bForceWrite)
 
 	static iconFVECTOR ambient = { 0.50, 0.50, 0.50, 0.00 };
 
-	if(fioMkdir(pDir) < 0)
+	if(mkdir(pDir, 0777) < 0)
 	{
 		if (!bForceWrite)
 		{
@@ -136,12 +136,12 @@ Bool MemCardWriteFile(char *pPath, Uint8 *pData, Uint32 nBytes)
 
 	if (!_MemCard_bInitialized) return FALSE;
 
-	fd = fioOpen(pPath, O_WRONLY | O_CREAT);
+	fd = open(pPath, O_WRONLY | O_CREAT);
 	if (fd > 0)
 	{
 		unsigned int result;
-		result = fioWrite(fd, pData, nBytes);
-		fioClose(fd);
+		result = write(fd, pData, nBytes);
+		close(fd);
 		printf("MemCard: Write %s (%d)\n", pPath, result);
 		return (result == nBytes);
 	}
@@ -154,12 +154,12 @@ Bool MemCardReadFile(char *pPath, Uint8 *pData, Uint32 nBytes)
 
 	if (!_MemCard_bInitialized) return FALSE;
 
-	fd = fioOpen(pPath, O_RDONLY);
+	fd = open(pPath, O_RDONLY);
 	if (fd > 0)
 	{
 		unsigned int result;
-		result = fioRead(fd, pData, nBytes);
-		fioClose(fd);
+		result = read(fd, pData, nBytes);
+		close(fd);
 		printf("MemCard: Read %s (%d)\n", pPath, result);
 		return (result == nBytes);
 	}

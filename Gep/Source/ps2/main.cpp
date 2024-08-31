@@ -4,10 +4,10 @@
 #include <sifrpc.h>
 #include <loadfile.h>
 #include <kernel.h>
-#define NEWLIB_PORT_AWARE
-#include <fileio.h>
 #include <iopheap.h>
 #include <iopcontrol.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "types.h"
 #include "console.h"
@@ -74,8 +74,8 @@ int full_reset()
 	   if necessary.  */
 	*imgcmd = '\0';
 
-	if ((fd = fioOpen(eeloadcnf, O_RDONLY)) >= 0) {
-		fioClose(fd);
+	if ((fd = open(eeloadcnf, O_RDONLY)) >= 0) {
+		close(fd);
 
 		strcpy(imgcmd, updateloader);
 		strcat(imgcmd, eeloadcnf);
@@ -88,7 +88,7 @@ int full_reset()
 //	scr_printf("Shutting down subsystems.\n");
 
 	cdvdExit();
-	fioExit();
+	//fioExit();
 	SifExitIopHeap();
 	SifLoadFileExit();
 	SifExitRpc();

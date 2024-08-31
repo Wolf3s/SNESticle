@@ -141,11 +141,11 @@ int CBrowserScreen::MenuEvent(Uint32 Type, Uint32 Parm1, void *Parm2)
 						case BROWSER_ENTRYTYPE_DRIVE:
 							break;
 						case BROWSER_ENTRYTYPE_DIR:
-							fioRmdir(str);
+							rmdir(str);
 							break;
 						default:
-							fioRemove(str);
-							fioRmdir(str);
+							remove(str);
+							rmdir(str);
 							break;
 					}
 					pBrowser->Chdir(".");
@@ -449,11 +449,7 @@ void CBrowserScreen::Input(Uint32 buttons, Uint32 trigger)
 }
 
 
-#ifdef _EE
 static int _BrowserDread(int fd, io_dirent_t *dirent)
-#else
-static int _BrowserDread(int fd, fio_dirent_t *dirent)
-#endif
 {
 	if (MCSave_IsInitialized())
 	{
@@ -489,11 +485,7 @@ void CBrowserScreen::SetDir(Char *pDir)
 		if (fd >= 0)
 		{
 			static Uint8 dirbuf[512] __attribute__((aligned(64)));
-#ifdef _EE
 			io_dirent_t *dirent = (io_dirent_t *)&dirbuf;
-#else
-			fio_dirent_t *dirent = (fio_dirent_t *)&dirbuf;
-#endif
 		 //	printf("fioDopen: %s %d %d %d\n", pDir, fd, sizeof(dirent), sizeof(fio_dirent_t));
 			
 //			while (fioDread(fd, dirent) > 0) // && m_nEntries < 1280)

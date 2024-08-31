@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define NEWLIB_PORT_AWARE
-#include <fileio.h>
 #include <iopheap.h>
 #include <libpad.h>
 #include "libxpad.h"
@@ -576,14 +574,14 @@ static int _MainLoopReadBinaryData(Uint8 *pBuffer, Int32 nBufferBytes, const cha
 	int nBytes = 0;
     int hFile;
 
-    hFile = fioOpen(pRomFile, O_RDONLY);
+    hFile = open(pRomFile, O_RDONLY);
     if (hFile < 0)
     {
         return -1;
     }
 
-    nBytes= fioRead(hFile, pBuffer, nBufferBytes);
-    fioClose(hFile);
+    nBytes= read(hFile, pBuffer, nBufferBytes);
+    close(hFile);
 
 	return nBytes;
 }
@@ -733,12 +731,12 @@ static Bool _MainLoopExecuteFile(const char *pFileName, Bool bLoadSRAM)
 
 	// see if file exists first...
 	int hFile;
-    hFile = fioOpen(pFileName, O_RDONLY);
+    hFile = open(pFileName, O_RDONLY);
 	if (hFile < 0)
 	{
 		return FALSE;
 	}
-	fioClose(hFile);
+	close(hFile);
 
 
 	// resolve file extension of filename
@@ -1135,11 +1133,11 @@ static int _MainLoopInstallCallback(char *pDestName, char *pSrcName, int Positio
 static void _DumpMemory()
 {
 	int fd;
-	fd = fioOpen("host:memdump.bin", O_WRONLY | O_CREAT);
+	fd = open("host:memdump.bin", O_WRONLY | O_CREAT);
 	if (fd >= 0)
 	{
-		fioWrite(fd, (void *)0x100000, 4 * 1024 * 1024);
-		fioClose(fd);
+		write(fd, (void *)0x100000, 4 * 1024 * 1024);
+		close(fd);
 	}
 }
 
@@ -1150,9 +1148,9 @@ static void _GetExploitDir(char *pStr)
 	char romver[16];
 
 	// Determine the PS2's region.  
-	fd = fioOpen("rom0:ROMVER", O_RDONLY);
-	fioRead(fd, romver, sizeof romver);
-	fioClose(fd);
+	fd = open("rom0:ROMVER", O_RDONLY, 0777);
+	read(fd, romver, sizeof romver);
+	close(fd);
 	code  = (romver[4] == 'E' ? 'E' : (romver[4] == 'J' ? 'I' : 'A'));
 
 	sprintf(pStr, "B%cDATA-SYSTEM", code);
@@ -1365,13 +1363,13 @@ static int _LoadMcModule(const char *path, int argc, const char *argv)
 	int fd;
 	int size;
 
-	fd= fioOpen(path, O_RDONLY);
+	fd= open(path, O_RDONLY);
 	if (fd < 0)
 	{
 		return -1;
 	}
-	size = fioLseek(fd, 0, SEEK_END);
-	fioClose(fd);
+	size = lseek(fd, 0, SEEK_END);
+	close(fd);
 
 	printf("LoadMcModule %s (%d)\n", path, size);
     iop_mem = SifAllocIopHeap(size);
@@ -1652,7 +1650,7 @@ int CopyFile(char *pDest, char *pSrc, CopyProgressCallBackT pCallBack)
 	int nBytes;
 	int nSrcSize;
 
-	fdSrc = fioOpen(pSrc, O_RDONLY);
+	fdSrc = open(pSrc, O_RDONLY);
 	if (fdSrc <= 0)
 	{
 		printf("Unable to open file %s\n", pSrc);
@@ -1660,13 +1658,13 @@ int CopyFile(char *pDest, char *pSrc, CopyProgressCallBackT pCallBack)
 	}
 
 	// get file size
-	nSrcSize = fioLseek(fdSrc, 0, SEEK_END);
-	fioLseek(fdSrc, 0, SEEK_SET);
+	nSrcSize = lseek(fdSrc, 0, SEEK_END);
+	lseek(fdSrc, 0, SEEK_SET);
 
-	fdDest = fioOpen(pDest, O_WRONLY | O_CREAT);
+	fdDest = open(pDest, O_WRONLY | O_CREAT);
 	if (fdDest <= 0)
 	{
-		fioClose(fdSrc);
+		close(fdSrc);
 		printf("Unable to open file %s\n", pDest);
 		return -2;
 	}
@@ -1676,10 +1674,10 @@ int CopyFile(char *pDest, char *pSrc, CopyProgressCallBackT pCallBack)
 		if (pCallBack)
 			pCallBack(pDest, pSrc, nTotalBytes, nSrcSize);
 
-		nBytes = fioRead(fdSrc, Buffer, sizeof(Buffer));
+		nBytes = read(fdSrc, Buffer, sizeof(Buffer));
 		if (nBytes > 0)
 		{
-			fioWrite(fdDest, Buffer, nBytes);
+			write(fdDest, Buffer, nBytes);
 			nTotalBytes += nBytes;
 		}
 	} while (nBytes > 0);
@@ -1687,14 +1685,14 @@ int CopyFile(char *pDest, char *pSrc, CopyProgressCallBackT pCallBack)
 	if (pCallBack)
 		pCallBack(pDest, pSrc, nTotalBytes, nSrcSize);
 
-	fioClose(fdSrc);
-	fioClose(fdDest);
+	close(fdSrc);
+	close(fdDest);
 	printf("Copied %s->%s (%d bytes)\n", pSrc, pDest, nTotalBytes);	
 
-	fdDest = fioOpen(pDest, O_RDONLY);
+	fdDest = open(pDest, O_RDONLY);
 	if (fdDest > 0)
 	{
-		fioClose(fdDest);
+		close(fdDest);
 		return 0;
 	} else
 	{
@@ -1728,7 +1726,7 @@ int InstallFiles(char *pDestPath, char *pSrcPath, char **ppInstallFiles, CopyPro
 	bTrailingSrc = _bTrailingPath(pSrcPath);
 	bTrailingDest = _bTrailingPath(pDestPath);
 
-	if (fioMkdir(pDestPath) < 0)
+	if (mkdir(pDestPath, 0777) < 0)
 	{
 		printf("Unable to create directory %s\n", pDestPath);
 	} 

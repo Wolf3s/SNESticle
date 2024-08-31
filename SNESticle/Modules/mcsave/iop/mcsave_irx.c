@@ -94,7 +94,7 @@ void* MCSave_Puts(char* s)
 	return NULL;
 }
 
-static fio_dirent_t dbuff  __attribute__((aligned(16)));
+static io_dirent_t dbuff  __attribute__((aligned(16)));
 
 void* MCSave_DRead(unsigned * sbuff)
 {
@@ -112,7 +112,7 @@ void* MCSave_DRead(unsigned * sbuff)
 		// setup dma
 		dmaStruct.src  = (void *)&dbuff;
 		dmaStruct.dest = (void *)sbuff[1];
-		dmaStruct.size = sizeof(fio_dirent_t);
+		dmaStruct.size = sizeof(io_dirent_t);
 		dmaStruct.attr = 0;
 
 		// Do the DMA transfer
