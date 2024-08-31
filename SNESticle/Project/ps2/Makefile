@@ -5,45 +5,15 @@
 # Tool versions
 #
 
-#export EE_GCC_VERSION  ?= 2.9
-
-#export EE_GCC_VERSION  ?= 3.2.2
-#export EE_GCC_VERSION  ?= 3.2.2-b1
 export EE_GCC_VERSION   ?= 14.1.0
 
-#export IOP_GCC_VERSION ?= 2.8.1
 export IOP_GCC_VERSION ?= 14.1.0
-#export DVP_GCC_VERSION ?= 3.2.2-beta
 export DVP_GCC_VERSION ?= 14.1.0
 
 #
 # Toolchain configuration
 #
 
-#PS2DEV       ?= $(DEV)/ps2dev
-
-#EE_BASE      = $(PS2DEV)/ee
-#IOP_BASE     = $(PS2DEV)/iop
-#DVP_BASE     = $(PS2DEV)/dvp
-
-#EE_PREFIX   = $(EE_BASE)/bin/mips64r5900el-ps2-elf-
-#EE_CC  	    = $(EE_PREFIX)gcc
-#EE_CCPLUS   = $(EE_PREFIX)gcc
-#EE_AS       = $(EE_PREFIX)as
-#EE_LD       = $(EE_PREFIX)ld
-#EE_AR       = $(EE_PREFIX)ar
-#EE_OBJCOPY  = $(EE_PREFIX)objcopy
-#EE_STRIP    = $(EE_PREFIX)strip
-
-#IOP_PREFIX  = $(IOP_BASE)/bin/mips64r5900el-ps2-elf-
-#IOP_CC      = $(IOP_PREFIX)gcc
-#IOP_AS      = $(IOP_PREFIX)as
-#IOP_LD      = $(IOP_PREFIX)ld
-#IOP_AR      = $(IOP_PREFIX)ar
-#IOP_OBJCOPY = $(IOP_PREFIX)objcopy
-#IOP_STRIP   = $(IOP_PREFIX)strip
-
-#BIN2C       = $(DEV)/bin/$(MACHTYPE)/bin2c
 BIN2C = $(PS2DEV)/ps2sdk/bin
 
 #
@@ -66,10 +36,6 @@ BUILD_DIR := $(BUILD)_EE$(EE_GCC_VERSION)
 # PS2DEV configuration
 #
 
-#PS2LIB_BASE ?= $(PS2DEV)/ps2lib/dev
-#PS2IP_BASE  ?= $(PS2DEV)/ps2net/dev/ps2ip
-#LWIP_BASE   ?= $(PS2DEV)/ps2net/dev/lwip/
-#PS2DRV_BASE ?= $(PS2DEV)/ps2drv/dev
 PS2LIB_BASE ?= $(PS2DEV)/ps2sdk
 PS2IP_BASE  ?= $(PS2DEV)/ps2sdk/ee
 
@@ -82,19 +48,7 @@ PS2IP_EE_INCS      =  -I$(PS2IP_BASE)/include
 #
 
 TARGET   	= SNESticle.elf
-LIBS     	= -lmc -lpad -lps2ip -lkernel -lfileXio -lc -lm -ldebug
-ifneq ($(EE_GCC_VERSION), 2.9)
-LIBS       += -lstdc++
-else
-LIBS       += 
-endif
-
-ifneq ($(EE_GCC_VERSION), 3.2.2)
-LIBS       += -lgcc
-else
-LIBS       += 
-endif
-
+LIBS     	= -lstdc++ -lz -lunzip -lmc -lpad -lps2ip -lkernel -lfileXio -lc -lm -ldebug
 LINKFILE    = $(PS2SDK)/ee/startup/linkfile
 
 CDDATAPATH	  = /cygdrive/z/iso/SNESticle
@@ -115,8 +69,6 @@ SNESSOURCE 	= ../../Source
 
 SOURCE  = 
 SOURCE += $(GEPDIR)/Source/ps2
-SOURCE += $(GEPDIR)/Include/common/zlib
-SOURCE += $(GEPDIR)/Include/common/unzip
 SOURCE += $(GEPDIR)/Source/common
 SOURCE += $(GEPDIR)/Source/common/console
 SOURCE += $(SNESSOURCE)/ps2
@@ -136,8 +88,6 @@ SOURCE += ../../Data/icon
 INCLUDE = 
 INCLUDE+= -I$(GEPDIR)/Include/common
 INCLUDE+= -I$(GEPDIR)/Include/ps2
-INCLUDE+= -I$(GEPDIR)/Source/common/zlib
-INCLUDE+= -I$(GEPDIR)/Source/common/unzip
 INCLUDE+= -I$(SNESSOURCE)/ps2
 INCLUDE+= -I$(SNESSOURCE)/common
 INCLUDE+= -I$(MODULE_BASE)/mcsave/ee
@@ -156,7 +106,6 @@ INCLUDE+= -I$(BUILD_DIR)
 DATAOBJS = memcard_icon.inc # 
 
 OBJS = 
-#OBJS +=	crt0.o
 OBJS +=	main.o
 #OBJS +=	excepHandler.o
 #OBJS +=	exceptions.o
@@ -169,7 +118,6 @@ OBJS +=	pixelformat.o
 OBJS +=	memspace.o 
 OBJS +=	inputdevice.o 
 OBJS +=	console.o 
-#OBJS +=	linebuffer.o 
 OBJS +=	bmpfile.o
 OBJS +=	mixbuffer.o
 OBJS +=	wavfile.o
@@ -179,34 +127,12 @@ OBJS += font.o
 OBJS += poly.o
 OBJS += texture.o
 
-OBJS +=	adler32.o 
-OBJS +=	compress.o 
-OBJS +=	crc32.o 
-OBJS +=	deflate.o 
-OBJS +=	gzio.o 
-OBJS +=	infblock.o 
-OBJS +=	infcodes.o 
-OBJS +=	inffast.o 
-OBJS +=	inflate.o 
-OBJS +=	inftrees.o 
-OBJS +=	infutil.o 
-OBJS +=	trees.o 
-OBJS +=	uncompr.o 
-OBJS +=	zutil.o 
-
-OBJS +=	explode.o 
-OBJS +=	unreduce.o 
-OBJS +=	unshrink.o 
-OBJS +=	unzip.o 
-
-
 OBJS +=	prof.o
 OBJS +=	proflog.o
 OBJS +=	profctr.o
 
 OBJS +=	cd.o 
 OBJS +=	gs.o 
-#OBJS +=	pad.o 
 OBJS +=	hw.o 
 OBJS +=	gpfifo.o 
 OBJS +=	libxpad.o 
@@ -310,18 +236,11 @@ EE_CFLAGS   = -G0 -O2 $(EE_AFLAGS) -pipe -Wall -Wa,-al -fomit-frame-pointer -fst
 #old: -fshort-double -mlong64 -Werror
 EE_CPPFLAGS = $(EE_CFLAGS) -fno-exceptions -fno-common -fno-rtti
 EE_LDFLAGS  = -nostartfiles -T$(LINKFILE) -Wl,-Map,SNESticle.map 
-#EE_LIBDIRS  = -L$(EE_BASE)/ee/lib -L$(PS2LIB_BASE)/ee/lib -L$(PS2IP_BASE)/ee/lib -L. 
-EE_LIBDIRS   = -L$(PS2DEV)/ee/lib -L$(PS2SDK)/ee/lib 
+EE_LIBDIRS   = -L$(PS2DEV)/ee/lib -L$(PS2SDK)/ee/lib -L$(PS2SDK)/ports/lib
 EE_INCS     = $(INCLUDE) -I$(PS2SDK)/common/include -I$(PS2SDK)/ee/include -I$(PS2SDK)/ports/include -I$(GSKIT)/include -I$(GSKIT)/ee/dma/include -I$(GSKIT)/ee/gs/include -I$(GSKIT)/ee/toolkit/include
 
-
-ifeq ($(EE_GCC_VERSION), 3.2.2-b1)
-EE_AFLAGS   += -march=r5900 -mtune=r5900
-EE_CFLAGS   += -march=r5900	-mtune=r5900
-else
 EE_AFLAGS   += -march=r5900  
 EE_CFLAGS   += $(EE_AFLAGS) -mips3
-endif
 
 vpath %.d ./$(BUILD_DIR)
 vpath %.o ./$(BUILD_DIR)
@@ -409,10 +328,6 @@ cdvd:
 ps2fs:
 	make -C /usr/ps2dev/ps2fs/iop
 	cp /usr/ps2dev/ps2fs/iop/ps2fs.irx .
-
-ps2lib:
-	make -C $(PS2LIB_BASE)/ee
-		  
 
 #
 # Build rules
@@ -511,7 +426,7 @@ $(TARGET): outdir $(DATAOBJS) $(OBJS)
 	@echo EE-GCC $(EE_GCC_VERSION) $(EE_BASE)
 	@echo Linking $@...
 	@cd $(BUILD_DIR) ; \
-	$(EE_CC) $(EE_LDFLAGS) $(EE_LIBDIRS) -o temp.elf $(OBJS) $(LIBDIRS) $(LIBS) 
+	$(EE_CC) $(EE_OPTFLAGS) $(EE_LDFLAGS) $(EE_LIBDIRS) -o temp.elf $(OBJS) $(LIBDIRS) $(LIBS) 
 	@$(EE_STRIP) -F elf32-littlemips $(BUILD_DIR)/temp.elf -o $(BUILD_DIR)/$(TARGET) 
 	@cp $(BUILD_DIR)/$(TARGET) .
 	@rm $(BUILD_DIR)/temp.elf
@@ -523,7 +438,6 @@ run: relink $(TARGET)
 #
 # dependencies
 #
-include $(OBJS:%.o=$(BUILD_DIR)/%.d)
 include $(PS2SDK)/samples/Makefile.pref
 include $(PS2SDK)/samples/Makefile.eeglobal 
 include $(PS2SDK)/samples/Makefile.eeglobal_cpp

@@ -78,6 +78,10 @@ extern "C" {
 
 extern "C" Int32 SNCPUExecute_ASM(SNCpuT *pCpu);
 
+#ifdef _EE
+void *__dso_handle = 0;
+void _exit(int status){}
+#endif
 
 #define MAINLOOP_MEMCARD (CODE_RELEASE || 0)
 
@@ -389,14 +393,14 @@ static void _MainLoopLoadSRAM()
 		PathTruncFileName(SaveName, _RomName, PathGetMaxFileNameLength(_SramPath) - 4);
 
         sprintf(Path, "%s/%s.%s", _SramPath, SaveName, _pSystem->GetString(Emu::System::StringE::STRING_STATEEXT));
-
+#ifdef WIP
 		if (MemCardReadFile(Path, pSRAM, nSramBytes))
 		{
             _MainLoop_SRAMChecksum = _CalcChecksum((Uint32 *)pSRAM, nSramBytes / 4);
 
 			ConPrint("SRAM loaded: %s\n", Path);
 		}
-
+#endif
         _MainLoop_SRAMUpdated = FALSE;
 	}
 
@@ -1561,7 +1565,7 @@ static void _MainLoopLoadModules(Char **ppSearchPaths)
 	        xpadInit(0);
 			InputInit(TRUE);
 	    }
-
+#ifdef WIP
 	    IOPLoadModule("rom0:XMCMAN", NULL, 0, NULL);
 	    if (IOPLoadModule("rom0:XMCSERV", NULL, 0, NULL) >= 0)
 		{
@@ -1570,6 +1574,7 @@ static void _MainLoopLoadModules(Char **ppSearchPaths)
 			MemCardCreateSave(_SramPath, _MainLoop_SaveTitle, TRUE);
 			#endif
 		}
+#endif
 	} else
 	{
 		// use the regular versions
@@ -1579,7 +1584,7 @@ static void _MainLoopLoadModules(Char **ppSearchPaths)
 	        padInit(0);
 			InputInit(FALSE);
 	    }
-
+#ifdef WIP
 	    IOPLoadModule("rom0:MCMAN", NULL, 0, NULL);
 	    if (IOPLoadModule("rom0:MCSERV", NULL, 0, NULL) >= 0)
 		{
@@ -1588,8 +1593,8 @@ static void _MainLoopLoadModules(Char **ppSearchPaths)
 			MemCardCreateSave(_SramPath, _MainLoop_SaveTitle, TRUE);
 			#endif
 		}
+#endif
 	}
-
 	bLoadedNetwork = _MainLoopInitNetwork(ppSearchPaths);
 
 	// configure network if we started it ourselves
