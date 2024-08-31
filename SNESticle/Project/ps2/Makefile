@@ -22,9 +22,9 @@ export DVP_GCC_VERSION ?= 14.1.0
 
 #PS2DEV       ?= $(DEV)/ps2dev
 
-EE_BASE      = $(PS2DEV)/ee
-IOP_BASE     = $(PS2DEV)/iop
-DVP_BASE     = $(PS2DEV)/dvp
+#EE_BASE      = $(PS2DEV)/ee
+#IOP_BASE     = $(PS2DEV)/iop
+#DVP_BASE     = $(PS2DEV)/dvp
 
 #EE_PREFIX   = $(EE_BASE)/bin/mips64r5900el-ps2-elf-
 #EE_CC  	    = $(EE_PREFIX)gcc
@@ -72,8 +72,6 @@ BUILD_DIR := $(BUILD)_EE$(EE_GCC_VERSION)
 #PS2DRV_BASE ?= $(PS2DEV)/ps2drv/dev
 PS2LIB_BASE ?= $(PS2DEV)/ps2sdk
 PS2IP_BASE  ?= $(PS2DEV)/ps2sdk/ee
-LWIP_BASE   ?= #$(PS2DEV)/ps2net/dev/lwip/
-PS2DRV_BASE ?= #$(PS2DEV)/ps2drv/dev
 
 PS2LIB_EE_INCS     =  -I${PS2LIB_BASE}/common/include -I${PS2LIB_BASE}/ee/include 
 PS2IP_EE_INCS      =  -I$(PS2IP_BASE)/include
@@ -306,14 +304,14 @@ endif
 endif    
 endif    
 
-EE_DEFINES  = $(EE_BUILDDEFINES) -DPS2_EE -DLSB_FIRST -DALIGN_DWORD -DCODE_PLATFORM=3
+EE_DEFINES  = $(EE_BUILDDEFINES) -DLSB_FIRST -DALIGN_DWORD -DCODE_PLATFORM=3
 EE_AFLAGS   = -EL
 EE_CFLAGS   = -G0 -O2 $(EE_AFLAGS) -pipe -Wall -Wa,-al -fomit-frame-pointer -fstrict-aliasing -fno-common -ffreestanding -fno-builtin -mhard-float -mno-abicalls
 #old: -fshort-double -mlong64 -Werror
 EE_CPPFLAGS = $(EE_CFLAGS) -fno-exceptions -fno-common -fno-rtti
 EE_LDFLAGS  = -nostartfiles -T$(LINKFILE) -Wl,-Map,SNESticle.map 
 #EE_LIBDIRS  = -L$(EE_BASE)/ee/lib -L$(PS2LIB_BASE)/ee/lib -L$(PS2IP_BASE)/ee/lib -L. 
-EE_LIBDIRS   = -L$(PS2SDK)/ee/lib 
+EE_LIBDIRS   = -L$(PS2DEV)/ee/lib -L$(PS2SDK)/ee/lib 
 EE_INCS     = $(INCLUDE) -I$(PS2SDK)/common/include -I$(PS2SDK)/ee/include -I$(PS2SDK)/ports/include -I$(GSKIT)/include -I$(GSKIT)/ee/dma/include -I$(GSKIT)/ee/gs/include -I$(GSKIT)/ee/toolkit/include
 
 
