@@ -619,20 +619,3 @@ void SNPPUBlendGS::Clear(SNPPUBlendInfoT *pInfo, Int32 iLine)
 
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

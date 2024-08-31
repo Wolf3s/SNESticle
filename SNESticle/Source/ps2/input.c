@@ -5,10 +5,7 @@
 #include "libpad.h"
 #include "types.h"
 #include "input.h"
-
-extern "C" {
 #include "hw.h"
-};
 
 static char _Input_PadBuf[INPUT_MAXPADS][256] __attribute__((aligned(64))) __attribute__ ((section (".bss")));
 static Uint32 _Input_PadData[INPUT_MAXPADS];

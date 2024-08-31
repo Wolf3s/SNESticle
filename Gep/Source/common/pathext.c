@@ -6,11 +6,11 @@
 #define PATHEXT_SIZE 		  (8)
 #define PATHEXT_MAXEXTENSIONS (16)
 
-struct PathExtT
+typedef struct 
 {
 	char			Ext[PATHEXT_SIZE];
 	PathExtTypeE 	Type;
-};
+} PathExtT;
 
 static Uint32 _Path_nExtList = 0;
 static PathExtT _Path_ExtList[PATHEXT_MAXEXTENSIONS];
