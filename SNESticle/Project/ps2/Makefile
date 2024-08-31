@@ -26,25 +26,25 @@ EE_BASE      = $(PS2DEV)/ee
 IOP_BASE     = $(PS2DEV)/iop
 DVP_BASE     = $(PS2DEV)/dvp
 
-EE_PREFIX   = $(EE_BASE)/bin/mips64r5900el-ps2-elf-
-EE_CC  	    = $(EE_PREFIX)gcc
-EE_CCPLUS   = $(EE_PREFIX)gcc
-EE_AS       = $(EE_PREFIX)as
-EE_LD       = $(EE_PREFIX)ld
-EE_AR       = $(EE_PREFIX)ar
-EE_OBJCOPY  = $(EE_PREFIX)objcopy
-EE_STRIP    = $(EE_PREFIX)strip
+#EE_PREFIX   = $(EE_BASE)/bin/mips64r5900el-ps2-elf-
+#EE_CC  	    = $(EE_PREFIX)gcc
+#EE_CCPLUS   = $(EE_PREFIX)gcc
+#EE_AS       = $(EE_PREFIX)as
+#EE_LD       = $(EE_PREFIX)ld
+#EE_AR       = $(EE_PREFIX)ar
+#EE_OBJCOPY  = $(EE_PREFIX)objcopy
+#EE_STRIP    = $(EE_PREFIX)strip
 
-IOP_PREFIX  = $(IOP_BASE)/bin/mips64r5900el-ps2-elf-
-IOP_CC      = $(IOP_PREFIX)gcc
-IOP_AS      = $(IOP_PREFIX)as
-IOP_LD      = $(IOP_PREFIX)ld
-IOP_AR      = $(IOP_PREFIX)ar
-IOP_OBJCOPY = $(IOP_PREFIX)objcopy
-IOP_STRIP   = $(IOP_PREFIX)strip
+#IOP_PREFIX  = $(IOP_BASE)/bin/mips64r5900el-ps2-elf-
+#IOP_CC      = $(IOP_PREFIX)gcc
+#IOP_AS      = $(IOP_PREFIX)as
+#IOP_LD      = $(IOP_PREFIX)ld
+#IOP_AR      = $(IOP_PREFIX)ar
+#IOP_OBJCOPY = $(IOP_PREFIX)objcopy
+#IOP_STRIP   = $(IOP_PREFIX)strip
 
-BIN2C       = $(DEV)/bin/$(MACHTYPE)/bin2c
-
+#BIN2C       = $(DEV)/bin/$(MACHTYPE)/bin2c
+BIN2C = $(PS2DEV)/ps2sdk/bin
 
 #
 # Build configuration
@@ -66,10 +66,14 @@ BUILD_DIR := $(BUILD)_EE$(EE_GCC_VERSION)
 # PS2DEV configuration
 #
 
-PS2LIB_BASE ?= $(PS2DEV)/ps2lib/dev
-PS2IP_BASE  ?= $(PS2DEV)/ps2net/dev/ps2ip
-LWIP_BASE   ?= $(PS2DEV)/ps2net/dev/lwip/
-PS2DRV_BASE ?= $(PS2DEV)/ps2drv/dev
+#PS2LIB_BASE ?= $(PS2DEV)/ps2lib/dev
+#PS2IP_BASE  ?= $(PS2DEV)/ps2net/dev/ps2ip
+#LWIP_BASE   ?= $(PS2DEV)/ps2net/dev/lwip/
+#PS2DRV_BASE ?= $(PS2DEV)/ps2drv/dev
+PS2LIB_BASE ?= $(PS2DEV)/ps2sdk
+PS2IP_BASE  ?= $(PS2DEV)/ps2sdk/ee
+LWIP_BASE   ?= #$(PS2DEV)/ps2net/dev/lwip/
+PS2DRV_BASE ?= #$(PS2DEV)/ps2drv/dev
 
 PS2LIB_EE_INCS     =  -I${PS2LIB_BASE}/common/include -I${PS2LIB_BASE}/ee/include 
 PS2IP_EE_INCS      =  -I$(PS2IP_BASE)/include
@@ -80,13 +84,17 @@ PS2IP_EE_INCS      =  -I$(PS2IP_BASE)/include
 #
 
 TARGET   	= SNESticle.elf
-LIBS     	= -lmc -lpad -lps2ip -lkernel -lc -lm -ldebug
+LIBS     	= -lmc -lpad -lps2ip -lkernel -lfileXio -lc -lm -ldebug
 ifneq ($(EE_GCC_VERSION), 2.9)
 LIBS       += -lstdc++
+else
+LIBS       += 
 endif
 
 ifneq ($(EE_GCC_VERSION), 3.2.2)
 LIBS       += -lgcc
+else
+LIBS       += 
 endif
 
 LINKFILE    = $(PS2SDK)/ee/startup/linkfile
@@ -153,7 +161,7 @@ OBJS =
 #OBJS +=	crt0.o
 OBJS +=	main.o
 #OBJS +=	excepHandler.o
-OBJS +=	exceptions.o
+#OBJS +=	exceptions.o
 #OBJS +=	stdio.o 
 #OBJS +=	array.o
 OBJS +=	file.o
@@ -198,8 +206,6 @@ OBJS +=	prof.o
 OBJS +=	proflog.o
 OBJS +=	profctr.o
 
-OBJS +=	poly.o 
-
 OBJS +=	cd.o 
 OBJS +=	gs.o 
 #OBJS +=	pad.o 
@@ -210,7 +216,7 @@ OBJS +=	libxmtap.o
 OBJS +=	sjpcm_rpc.o 
 OBJS +=	cdvd_rpc.o 
 OBJS +=	ps2dma.o 
-#OBJS +=	mcsave_ee.o 
+OBJS +=	mcsave_ee.o 
 OBJS +=	sjpcmbuffer.o
 OBJS +=	gslist.o
 OBJS +=	gpprim.o
@@ -221,8 +227,6 @@ OBJS +=	titleman.o
 
 OBJS +=	netplay_ee.o 
 
-OBJS +=	font.o 
-OBJS +=	texture.o 
 OBJS +=	font_04b16b.o 
 
 
@@ -303,11 +307,10 @@ endif
 endif    
 
 EE_DEFINES  = $(EE_BUILDDEFINES) -DPS2_EE -DLSB_FIRST -DALIGN_DWORD -DCODE_PLATFORM=3
-
-EE_AFLAGS   = -EL -ahlsm 
-EE_CFLAGS   = -G0 -O2 -EL -pipe -Wall -Wa,-al -fomit-frame-pointer -fstrict-aliasing -fno-common -ffreestanding -fno-builtin -mhard-float -mno-abicalls
+EE_AFLAGS   = -EL
+EE_CFLAGS   = -G0 -O2 $(EE_AFLAGS) -pipe -Wall -Wa,-al -fomit-frame-pointer -fstrict-aliasing -fno-common -ffreestanding -fno-builtin -mhard-float -mno-abicalls
 #old: -fshort-double -mlong64 -Werror
-EE_CPPFLAGS = -fno-exceptions -fno-common -fno-rtti
+EE_CPPFLAGS = $(EE_CFLAGS) -fno-exceptions -fno-common -fno-rtti
 EE_LDFLAGS  = -nostartfiles -T$(LINKFILE) -Wl,-Map,SNESticle.map 
 #EE_LIBDIRS  = -L$(EE_BASE)/ee/lib -L$(PS2LIB_BASE)/ee/lib -L$(PS2IP_BASE)/ee/lib -L. 
 EE_LIBDIRS   = -L$(PS2SDK)/ee/lib 
@@ -319,7 +322,7 @@ EE_AFLAGS   += -march=r5900 -mtune=r5900
 EE_CFLAGS   += -march=r5900	-mtune=r5900
 else
 EE_AFLAGS   += -march=r5900  
-EE_CFLAGS   += -march=r5900  -mips3
+EE_CFLAGS   += $(EE_AFLAGS) -mips3
 endif
 
 vpath %.d ./$(BUILD_DIR)
@@ -419,18 +422,22 @@ ps2lib:
 
 %.o: %.c
 	@echo Compiling $<...
+	@$(DIR_GUARD)
 	@$(EE_CC) $(EE_CFLAGS) $(EE_DEFINES) $(EE_INCS) $(INCLUDE) -c $< -o $(BUILD_DIR)/$@ > $(BUILD_DIR)/$*.lst
 
 %.o: %.cc
 	@echo Compiling $<...
+	@$(DIR_GUARD)
 	@$(EE_CCPLUS) $(EE_CFLAGS) $(EE_DEFINES) $(EE_CPPFLAGS) $(EE_INCS) $(INCLUDE) -c $< -o $(BUILD_DIR)/$@ > $(BUILD_DIR)/$*.lst
 
 %.o: %.cpp
 	@echo Compiling $<...
+	@$(DIR_GUARD)
 	@$(EE_CCPLUS) $(EE_CFLAGS) $(EE_DEFINES) $(EE_CPPFLAGS) $(EE_INCS) $(INCLUDE) -c $< -o $(BUILD_DIR)/$@ > $(BUILD_DIR)/$*.lst
 
 %.s: %.cpp
 	@echo Compiling to assembly $<...
+	@$(DIR_GUARD)
 	@$(EE_CCPLUS) $(EE_CFLAGS) $(EE_DEFINES) $(EE_CPPFLAGS) $(EE_INCS) $(INCLUDE) -S $< -o $(BUILD_DIR)/$*.s
 
 %.o: %.S
@@ -440,10 +447,12 @@ ps2lib:
 
 %.o: %.s
 	@echo Assembling $<...
+	@$(DIR_GUARD)
 	@$(EE_AS) $(EE_AFLAGS) $< -o $(BUILD_DIR)/$@ > $(BUILD_DIR)/$*.lst
 
 %.o: %.dsm
 	@echo DVP Assembling $<...
+	@$(DIR_GUARD)
 	@$(EE_DVP_AS) $(INCLUDE) $< -o $(BUILD_DIR)/$@ > $(BUILD_DIR)/$*.lst
 
 %.inc: %.icn
@@ -519,3 +528,4 @@ run: relink $(TARGET)
 include $(OBJS:%.o=$(BUILD_DIR)/%.d)
 include $(PS2SDK)/samples/Makefile.pref
 include $(PS2SDK)/samples/Makefile.eeglobal 
+include $(PS2SDK)/samples/Makefile.eeglobal_cpp

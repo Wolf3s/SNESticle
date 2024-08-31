@@ -16,7 +16,8 @@
 #ifndef _TYPES_H
 #define _TYPES_H
 
-#include "assert.h"
+#include <assert.h>
+#include <stdbool.h>
 #include "gepdefs.h"
 
 #ifndef ASSERT
@@ -40,7 +41,7 @@ typedef signed short	Int16;
 typedef unsigned int	Uint32;
 typedef signed int		Int32;
 typedef char			Char;
-typedef unsigned char   Bool;
+typedef bool            Bool;
 typedef float			Float32;
 typedef double			Float64;
 #ifdef _EE

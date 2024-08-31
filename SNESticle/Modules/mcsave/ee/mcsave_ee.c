@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sifrpc.h>
 #include <stdarg.h>
+#define NEWLIB_PORT_AWARE 
 #include <fileio.h>
 #include "mcsave_ee.h"
 
@@ -121,7 +122,7 @@ void MCSave_Shutdown()
 	_MCSave_bInitialized = 0;
 }
 
-#ifdef PS2_EE
+#ifdef _EE
 int MCSave_Dread(int fd, io_dirent_t *dir)
 #else
 int MCSave_Dread(int fd, fio_dirent_t *dir)
@@ -135,8 +136,11 @@ int MCSave_Dread(int fd, fio_dirent_t *dir)
 	arg.fd[1] = (int)dir;
 
 	if (!IS_UNCACHED_SEG(dir))
+#ifdef _EE
+		SifWriteBackDCache(dir, sizeof(io_dirent_t));
+#else
 		SifWriteBackDCache(dir, sizeof(fio_dirent_t));
-
+#endif
 	SifCallRpc(&cd0,MCSAVE_DREAD,0,&arg,sizeof(arg),&arg, sizeof(arg), NULL, NULL);
 	return arg.result;
 }

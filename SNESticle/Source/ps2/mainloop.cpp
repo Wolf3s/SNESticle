@@ -146,7 +146,9 @@ static CRenderSurface *_fbTexture[2];
 static Uint32 _iframetex=0;
 
 static TextureT _OutTex;
+#ifdef DEBUG
 static CWavFile _WavFile;
+#endif
 
 static Uint8 _RomData[4 * 1024 * 1024 + 1024] __attribute__((aligned(64))) __attribute__ ((section (".bss")));
 
@@ -2730,7 +2732,7 @@ static void _MainLoopInputProcess(Uint32 buttons)
 
 
 
-    #if 0 // CODE_DEBUG
+    #ifdef DEBUG // CODE_DEBUG
 	if (trigger & PAD_L2)
 	{
         if (_WavFile.IsOpen())
@@ -2756,7 +2758,7 @@ static void _MainLoopInputProcess(Uint32 buttons)
     #endif
 
 
-    #if 1 // CODE_DEBUG
+    #ifdef DEBUG // CODE_DEBUG
 	if (buttons & PAD_L2)
 	{
         if (trigger&PAD_CROSS)
