@@ -34,11 +34,11 @@ jobs:
       with:
           name: "Development Build"
           path: |
-            Release/*.exe
-            x64/Release/*.exe
+            Project/win32/Release/*.exe
+            Project/win32/x64/Release/*.exe
   build:
     runs-on: ubuntu-latest
-    container: ps2dev/gskit:latest
+    container: ps2dev/ps2dev:latest
     steps:
     - uses: actions/checkout@v2        
     - name: Install dependencies
