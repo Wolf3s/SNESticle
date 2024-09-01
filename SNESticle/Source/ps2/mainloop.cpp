@@ -74,6 +74,11 @@ extern "C" {
 #include "sjpcm.h"
 };
 
+#define NEWLIB_PORT_AWARE
+#include <fileXio_rpc.h>
+#include <fileio.h>
+
+
 extern "C" Int32 SNCPUExecute_ASM(SNCpuT *pCpu);
 
 #ifdef _EE
@@ -1103,11 +1108,13 @@ static char *_MainLoop_pInstallFiles[] =
 	"BOOT.ELF",		"BOOT.ELF",
 	"TITLE.DB",		"TITLE.DB",
 	"ICON.SYS",		"ICON.SYS",
+	"IOMANX.IRX"    "IOMANX.IRX",
+	"FILEXIO.IRX"   "FILEXIO.IRX"
 	"PS2IP.IRX",	"PS2IP.IRX",
 	"PS2IPS.IRX",	"PS2IPS.IRX",
 	"PS2LINK.IRX",	"PS2LINK.IRX",
-	"PS2SMAP.IRX",	"PS2SMAP.IRX",
-//	"CDVD.IRX",		"CDVD.IRX",
+	//"PS2SMAP.IRX","PS2SMAP.IRX",
+	"SMAP.IRX",	    "SMAP.IRX",	
 	"CDFS.IRX",		"CDFS.IRX",
 	"SJPCM2.IRX",	"SJPCM2.IRX",
 	"MCSAVE.IRX",	"MCSAVE.IRX",
@@ -1512,9 +1519,10 @@ static Bool _MainLoopInitNetwork(Char **ppSearchPaths)
     {
 		// load ps2ip modules
         IOPLoadModule("PS2IP.IRX", ppSearchPaths, 0, NULL);
-        IOPLoadModule("PS2SMAP.IRX", ppSearchPaths, 0, NULL);
-
-        ret = IOPLoadModule("PS2IPS.IRX", ppSearchPaths, 0, NULL);
+        //IOPLoadModule("PS2SMAP.IRX", ppSearchPaths, 0, NULL);
+        IOPLoadModule("SMAP.IRX", ppSearchPaths, 0, NULL);
+        
+		ret = IOPLoadModule("PS2IPS.IRX", ppSearchPaths, 0, NULL);
 		if (ret < 0)
 		{
 			// network not setup
@@ -1550,6 +1558,11 @@ static void _MainLoopLoadModules(Char **ppSearchPaths)
 	#endif
 
 //    IOPLoadModule("rom0:SECRMAN", NULL, 0, NULL);
+	IOPLoadModule("rom0:IOMANX.IRX", NULL, 0, NULL);
+	if (IOPLoadModule("FILEXIO.IRX", NULL, 0, NULL) >= 0)
+	{
+	    fileXioInit();
+	 }
 
 	if (IOPLoadModule("rom0:XSIO2MAN", NULL, 0, NULL) >= 0)
 	{
@@ -1576,7 +1589,6 @@ static void _MainLoopLoadModules(Char **ppSearchPaths)
 #endif
 	} else
 	{
-		// use the regular versions
 	    IOPLoadModule("rom0:SIO2MAN", NULL, 0, NULL);
 	    if (IOPLoadModule("rom0:PADMAN", NULL, 0, NULL) >= 0)
 	    {

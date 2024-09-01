@@ -4,7 +4,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <kernel.h>
 
 #if 0
 void NetPrintInit();

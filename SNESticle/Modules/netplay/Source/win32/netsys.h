@@ -4,6 +4,7 @@
 
 // ugh
 #include <windows.h>
+#include <winsock.h>
 
 typedef struct
 {

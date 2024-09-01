@@ -4,7 +4,7 @@
 #include "types.h"
 #include "file.h"
 
-Bool FileReadMem(char *pFilePath, void *pMem, size_t nBytes)
+Bool FileReadMem(const Char *pFilePath, void *pMem, size_t nBytes)
 {
 	FILE *pFile;
 	pFile = fopen(pFilePath, "rb");
@@ -19,7 +19,7 @@ Bool FileReadMem(char *pFilePath, void *pMem, size_t nBytes)
 	return FALSE;
 }
 
-Bool FileWriteMem(char *pFilePath, void *pMem, size_t nBytes)
+Bool FileWriteMem(const Char *pFilePath, void *pMem, size_t nBytes)
 {
 	FILE *pFile;
 	size_t nWriteBytes;
@@ -35,7 +35,7 @@ Bool FileWriteMem(char *pFilePath, void *pMem, size_t nBytes)
 	return FALSE;
 }
 
-Bool FileExists(char *pFilePath)
+Bool FileExists(const Char *pFilePath)
 {
 	FILE *pFile;
 

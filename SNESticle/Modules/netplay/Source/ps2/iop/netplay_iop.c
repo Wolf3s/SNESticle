@@ -1,13 +1,20 @@
 
 #include <tamtypes.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <sifrpc.h>
-#include <kernel.h>
-#include <stdio.h>
-#include <sifcmd.h>
-#include <sifrpc.h>
+//#include <kernel.h>
+#include <thbase.h>
+#include <thsemap.h>
+#include <loadcore.h>
 #include <sysmem.h>
+#include <intrman.h>
+#include <sifcmd.h>
+#include <libsd.h>
+#include <sysclib.h>
 #include <ps2ip.h>
+#include <string.h>
+#include "types.h"
 #include "netplay_rpc.h"
 #include "netserver.h"
 #include "netclient.h"
@@ -289,7 +296,7 @@ static void* _NetPlayRPC_Init(unsigned int* sbuff)
     NetClientNew(&_client);
 	NetClientSetCallback(&_client, _ClientCallback);
 
-	printf("NetPlay: Initialized %dK\n",QueryTotalFreeMemSize() / 1024);
+	//printf("NetPlay: Initialized %dK\n",QueryTotalFreeMemSize() / 1024);
 	return sbuff;
 }
 

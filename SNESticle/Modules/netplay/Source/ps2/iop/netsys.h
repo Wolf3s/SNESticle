@@ -2,6 +2,7 @@
 #ifndef _NETSYS_H
 #define _NETSYS_H
 
+#include "llnetsocket.h"
 
 typedef int NetSysSemaT;
 typedef int NetSysThreadT;

@@ -4,7 +4,6 @@
 #ifndef _NETSOCKET_H
 #define _NETSOCKET_H
 
-#include <winsock.h>
 #include "netsys.h"
 
 struct NetSocket_t;

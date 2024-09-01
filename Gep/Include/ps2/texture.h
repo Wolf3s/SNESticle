@@ -30,12 +30,20 @@ struct ClutT
 	Uint32		nBytes;
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void TextureNew(TextureT *pTexture, Uint32 uWidth, Uint32 uHeight, TexFormatE eTexFormat);
 void TextureDelete(TextureT *pTexture);
 Uint32 TextureGetAddr(TextureT *pTexture);
 void TextureSetAddr(TextureT *pTexture, Uint32 uAddr);
 void TextureSetFilter(TextureT *pTexture, Uint32 eFilter);
 void TextureUpload(TextureT *pTexture, Uint8 *pData);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

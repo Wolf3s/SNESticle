@@ -1,28 +1,14 @@
-AR	= iop-ar
-AS	= iop-as
-CC	= iop-gcc
-GCC	= iop-gcc
-LD	= iop-ld
-NM	= iop-nm
-SIZE	= iop-size
-STRIP	= iop-strip
-RANLIB	= iop-ranlib
-OBJCOPY	= iop-objcopy
-OBJDUMP	= iop-objdump
-
 TARGET = netplay.irx
-PS2SMAP=$(PS2DEV)/ps2eth
-
 SOURCE  = 
 SOURCE += ../../Source/common ../../Source/ps2/iop
 
 INCLUDE = -I../../Source/common -I../../Source/ps2/common  -I../../Source/ps2/iop
 
-
+# -G0 -EL -mcpu=r3000
 OBJ	= netplay_iop.o netserver.o netsys.o netclient.o netsocket.o netprint.o netpacket.o netqueue.o
-CFLAGS	= -O2 -Werror -Wall -I$(PS2LIB)/iop/include -I$(PS2LIB)/common/include -I$(PS2IP)/include $(INCLUDE) -G0 -EL -mcpu=r3000 -fomit-frame-pointer
-LDFLAGS = -Wl,-s -nostdlib -L$(PS2LIB)/iop/lib -L$(PS2LIB)/iop/libkernel -L$(PS2IP)/iop/lib  -L$(PS2SMAP)/lib -G0
-LIBS	= -lkernel -liop_ps2ip
+CFLAGS	= -D_IOP -O2 -Werror -Wall -I$(PS2SDK)/iop/include -I$(PS2SDK)/common/include $(INCLUDE) -fomit-frame-pointer
+LDFLAGS = -Wl,-s -nostdlib -L$(PS2SDK)/iop/lib -G0
+LIBS	= -lkernel -lps2ip
 all: $(TARGET)
 
 
@@ -41,3 +27,6 @@ $(TARGET): $(OBJ)
 
 clean:
 	rm -f *.o *.irx $(TARGET)
+
+include $(PS2SDK)/samples/Makefile.pref
+include $(PS2SDK)/samples/Makefile.iopglobal 

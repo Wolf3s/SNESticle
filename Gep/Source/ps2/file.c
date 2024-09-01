@@ -9,7 +9,7 @@
 #include <unistd.h>
 
 
-Bool FileReadMem(Char *pFilePath, void *pMem, Uint32 nBytes)
+Bool FileReadMem(const Char *pFilePath, void *pMem, Uint32 nBytes)
 {
     #if 0
 	FILE *pFile;
@@ -40,7 +40,7 @@ Bool FileReadMem(Char *pFilePath, void *pMem, Uint32 nBytes)
     #endif
 }
 
-Bool FileWriteMem(Char *pFilePath, void *pMem, Uint32 nBytes)
+Bool FileWriteMem(const Char *pFilePath, void *pMem, Uint32 nBytes)
 {
     #if 0
 	FILE *pFile;
@@ -72,7 +72,7 @@ Bool FileWriteMem(Char *pFilePath, void *pMem, Uint32 nBytes)
     #endif
 }
 
-Bool FileExists(Char *pFilePath)
+Bool FileExists(const Char *pFilePath)
 {
     #if 0
 	FILE *pFile;

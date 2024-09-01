@@ -5,10 +5,10 @@
 extern "C" {
 #endif
 
-Bool FileReadMem(char *pFilePath, void *pMem, size_t nBytes);
-Bool FileWriteMem(char *pFilePath, void *pMem, size_t nBytes);
+Bool FileReadMem(const Char *pFilePath, void *pMem, size_t nBytes);
+Bool FileWriteMem(const Char *pFilePath, void *pMem, size_t nBytes);
 
-Bool FileExists(char *pFilePath);
+Bool FileExists(const Char *pFilePath);
 
 #ifdef __cplusplus 
 };
