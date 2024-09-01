@@ -16,6 +16,8 @@
 #ifndef _TYPES_H
 #define _TYPES_H
 
+#include <windows.h>
+#include <wingdi.h>
 #include "assert.h"
 
 #ifndef ASSERT
@@ -41,7 +43,7 @@ typedef signed int			Int32;
 typedef unsigned __int64	Uint64;
 typedef signed __int64		Int64;
 
-typedef unsigned char		Bool;
+typedef boolean				Bool;
 
 #define _ALIGN(__Align) 
 #define _INLINE _inline

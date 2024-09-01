@@ -4,20 +4,12 @@
 #include "surface.h"
 #include "bmpfile.h"
 
-#ifdef _MSC_VER
-#include <windows.h>
-#else
-typedef Uint8 BYTE;
-typedef Uint16 WORD;
-typedef Uint32 DWORD;
-typedef Int32 LONG;
-#endif
-
 #define BI_RGB        0L
 #define BI_RLE8       1L
 #define BI_RLE4       2L
 #define BI_BITFIELDS  3L
 
+#ifndef _MSC_VER
 typedef struct tagBITMAPFILEHEADER {
         WORD    bfType;
         WORD    bfSizeLo;
@@ -49,7 +41,7 @@ typedef struct tagRGBQUAD {
         BYTE    rgbRed;
         BYTE    rgbReserved;
 } RGBQUAD;
-
+#endif
 
 Bool BMPWriteFile(char *pFileName, CSurface *pSurface, PaletteT *pPalette)
 {
@@ -113,9 +105,12 @@ Bool BMPWriteFile(char *pFileName, CSurface *pSurface, PaletteT *pPalette)
 
 	// store offset of bits
 	size = ftell(pFile);
+#ifdef _MSC_VER
+	hdr.bfOffBits = size & 0xFFFF | (size >> 16) & 0xFFFF;
+#else
 	hdr.bfOffBitsLo = size & 0xFFFF;
 	hdr.bfOffBitsHi = (size >> 16) & 0xFFFF;
-
+#endif
 	for (iLine = pSurface->GetHeight() - 1; iLine >= 0; iLine--)
 	{
 		// write line
@@ -125,9 +120,12 @@ Bool BMPWriteFile(char *pFileName, CSurface *pSurface, PaletteT *pPalette)
 
 	// store file size
 	size = ftell(pFile);
+#ifdef _MSC_VER
+	hdr.bfSize = size & 0xFFFF | (size >> 16) & 0xFFFF;
+#else
 	hdr.bfSizeLo = size & 0xFFFF;
 	hdr.bfSizeHi = (size >> 16) & 0xFFFF;
-
+#endif
 	// rewrite header
 	fseek(pFile, 0, SEEK_SET);
 	fwrite(&hdr, sizeof(hdr), 1, pFile);
@@ -193,8 +191,11 @@ Bool BMPReadFile(char *pFileName, CSurface *pSurface)
 	pSurface->Alloc(info.biWidth, info.biHeight, PixelFormatGetByEnum(eFormat));
 
 	// seek to bitmap data
+#ifdef _MSC_VER
+	fseek(pFile, (hdr.bfOffBits << 16), SEEK_SET);
+#else
 	fseek(pFile, (hdr.bfOffBitsHi << 16) | hdr.bfOffBitsLo, SEEK_SET);
-
+#endif
 	// read lines
 	pSurface->Lock();
 

@@ -41,6 +41,10 @@ typedef signed int		Int32;
 typedef char			Char;
 typedef unsigned char   Bool;
 
+typedef Uint8 BYTE;
+typedef Uint16 WORD;
+typedef Uint32 DWORD;
+typedef Int32 LONG;
 
 #endif
 

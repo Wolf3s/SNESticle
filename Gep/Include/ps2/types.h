@@ -53,6 +53,11 @@ typedef signed long int   Int64;
 
 typedef unsigned int      Uint128 __attribute__(( mode(TI) ));
 
+typedef Uint8 BYTE;
+typedef Uint16 WORD;
+typedef Uint32 DWORD;
+typedef Int32 LONG;
+
 #define _ALIGN(__align) __attribute__((aligned(__align)))
 #define _INLINE inline
 

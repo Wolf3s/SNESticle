@@ -43,5 +43,10 @@ typedef unsigned char   Bool;
 typedef float			Float32;
 typedef double			Float64;
 
+typedef Uint8 BYTE;
+typedef Uint16 WORD;
+typedef Uint32 DWORD;
+typedef Int32 LONG;
+
 #endif
 
