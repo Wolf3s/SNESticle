@@ -2,8 +2,11 @@
 //#include <sys/stat.h>
 //#include <stdlib.h>
 //#include <stdio.h>
+#include <stddef.h>
 #include "types.h"
 #include "file.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 
 Bool FileReadMem(Char *pFilePath, void *pMem, Uint32 nBytes)

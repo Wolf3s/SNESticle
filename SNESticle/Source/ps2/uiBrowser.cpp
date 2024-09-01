@@ -15,7 +15,6 @@
 #include "poly.h"
 #include "uiBrowser.h"
 extern "C" {
-#include "cdvd_rpc.h"
 #include "mcsave_ee.h"
 };
 
@@ -425,7 +424,7 @@ void CBrowserScreen::Input(Uint32 buttons, Uint32 trigger)
 		if (GetEntryPath(str, sizeof(str))!=0)
 		{
 
-			CDVD_FlushCache();
+			//CDVD_FlushCache();
 
 	        switch(m_pDirEntries[m_iSelect].eType)
 	        {

@@ -6,8 +6,7 @@
 #include <string.h>
 #include <sifrpc.h>
 #include <stdarg.h>
-#define NEWLIB_PORT_AWARE 
-#include <fileio.h>
+
 #include "mcsave_ee.h"
 
 static unsigned sbuff[64] __attribute__((aligned (64)));

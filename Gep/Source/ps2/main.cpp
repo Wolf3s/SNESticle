@@ -8,6 +8,7 @@
 #include <iopcontrol.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <libcdvd-common.h>
 
 #include "types.h"
 #include "console.h"
@@ -15,7 +16,6 @@
 
 extern "C" {
 #include "excepHandler.h"
-#include "cd.h"
 #include "hw.h"
 };
 
@@ -66,7 +66,8 @@ int full_reset()
 
 	/* The CDVD must be initialized here (before shutdown) or else the PS2
 	   could hang on reboot.  I'm not sure why this happens.  */
-	if (cdvdInit(CDVD_INIT_NOWAIT) < 0)
+	//if (cdvdInit(CDVD_INIT_NOWAIT) < 0)
+	if (sceCdInit(SCECdINoD) < 0)	
 		return -1;
 
 	/* Here we detect which IOP image we want to reset with.  Older Japanese
@@ -82,12 +83,14 @@ int full_reset()
 	}
 //	scr_printf("rebooting with imgcmd '%s'\n", *imgcmd ? imgcmd : "(null)");
 
-	if (cdvdInit(CDVD_EXIT) < 0)
+	//if (cdvdInit(CDVD_EXIT) < 0)
+	if (sceCdInit(SCECdEXIT) < 0)
 		return -1;
 
 //	scr_printf("Shutting down subsystems.\n");
 
-	cdvdExit();
+	//cdvdExit();
+	//TODO: sceCdExit();
 	//fioExit();
 	SifExitIopHeap();
 	SifLoadFileExit();
@@ -136,8 +139,9 @@ int main(int argc, char **argv)
 	}
 
 	// initialize cdvd
-    cdvdInit(CDVD_INIT_NOWAIT);
-
+    //cdvdInit(CDVD_INIT_NOWAIT);
+	sceCdInit(SCECdINoD);
+	
     for (iArg=0; iArg < argc; iArg++)
     {
         printf("%d: %s\n", iArg, argv[iArg]);

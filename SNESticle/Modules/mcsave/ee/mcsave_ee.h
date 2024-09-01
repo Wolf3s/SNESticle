@@ -3,6 +3,10 @@
 #ifndef _MCSAVE_EE_H
 #define _MCSAVE_EE_H
 
+#define NEWLIB_PORT_AWARE 
+#include <io_common.h>
+#include <fileio.h>
+
 #define	MCSAVE_IRX		0xB0D1DCD
 #define MCSAVE_PUTS		0x01
 #define	MCSAVE_INIT		0x02

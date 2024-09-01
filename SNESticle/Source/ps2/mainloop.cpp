@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <iopheap.h>
 #include <libpad.h>
 #include "libxpad.h"
@@ -38,7 +40,6 @@
 #endif
 #include "emumovie.h"
 extern "C" {
-#include "cd.h"
 #include "ps2dma.h"
 #include "sncpu_c.h"
 #include "snspc_c.h"
@@ -71,7 +72,6 @@ extern "C" {
 
 extern "C" {
 #include "sjpcm.h"
-#include "cdvd_rpc.h"
 };
 
 extern "C" Int32 SNCPUExecute_ASM(SNCpuT *pCpu);
@@ -1107,7 +1107,8 @@ static char *_MainLoop_pInstallFiles[] =
 	"PS2IPS.IRX",	"PS2IPS.IRX",
 	"PS2LINK.IRX",	"PS2LINK.IRX",
 	"PS2SMAP.IRX",	"PS2SMAP.IRX",
-	"CDVD.IRX",		"CDVD.IRX",
+//	"CDVD.IRX",		"CDVD.IRX",
+	"CDFS.IRX",		"CDFS.IRX",
 	"SJPCM2.IRX",	"SJPCM2.IRX",
 	"MCSAVE.IRX",	"MCSAVE.IRX",
 	"NETPLAY.IRX",	"NETPLAY.IRX",
@@ -1162,7 +1163,7 @@ static void _AddTitleDB(char *pPath)
 	FILE *pFile;
 	char str[256];
 
-	CDVD_FlushCache();
+//	CDVD_FlushCache();
 
 	pFile = fopen("cdfs:/SYSTEM.CNF", "rt");
 //	pFile = fopen("host:/SYSTEM.CNF", "rt");
@@ -1607,10 +1608,11 @@ static void _MainLoopLoadModules(Char **ppSearchPaths)
         NetPlayInit((void *)_MainLoopNetCallback);
     }
 
-    if (IOPLoadModule("CDVD.IRX", ppSearchPaths, 0, NULL) >= 0)
+    //if (IOPLoadModule("CDVD.IRX", ppSearchPaths, 0, NULL) >= 0)
+	if (IOPLoadModule("CDFS.IRX", ppSearchPaths, 0, NULL) >= 0)
     {
         printf("CDVD_Init()\n");
-        CDVD_Init();
+        //CDVD_Init();
     }
 
 	if (IOPLoadModule("rom0:LIBSD", NULL, 0, NULL) < 0)

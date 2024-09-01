@@ -4,10 +4,14 @@
 #include "surface.h"
 #include "bmpfile.h"
 
+#ifdef _MSC_VER
+#include <windows.h>
+#else
 typedef Uint8 BYTE;
 typedef Uint16 WORD;
 typedef Uint32 DWORD;
 typedef Int32 LONG;
+#endif
 
 #define BI_RGB        0L
 #define BI_RLE8       1L

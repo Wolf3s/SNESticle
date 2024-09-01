@@ -48,7 +48,7 @@ PS2IP_EE_INCS      =  -I$(PS2IP_BASE)/include
 #
 
 TARGET   	= SNESticle.elf
-LIBS     	= -lstdc++ -lz -lunzip -lmc -lpad -lps2ip -lkernel -lfileXio -lc -lm -ldebug
+LIBS     	= -lstdc++ -lz -lunzip -lcdvd -lmc -lpad -lps2ip -lkernel -lfileXio -lc -lm -ldebug
 LINKFILE    = $(PS2SDK)/ee/startup/linkfile
 
 CDDATAPATH	  = /cygdrive/z/iso/SNESticle
@@ -107,8 +107,8 @@ DATAOBJS = memcard_icon.inc #
 
 OBJS = 
 OBJS +=	main.o
-#OBJS +=	excepHandler.o
-#OBJS +=	exceptions.o
+OBJS +=	excepHandler.o
+OBJS +=	exceptions.o
 #OBJS +=	stdio.o 
 #OBJS +=	array.o
 OBJS +=	file.o
@@ -131,7 +131,6 @@ OBJS +=	prof.o
 OBJS +=	proflog.o
 OBJS +=	profctr.o
 
-OBJS +=	cd.o 
 OBJS +=	gs.o 
 OBJS +=	hw.o 
 OBJS +=	gpfifo.o 
@@ -322,8 +321,7 @@ clean_cdvd:
 	make clean -C $(MODULE_BASE)/libcdvd/iop
 
 cdvd:
-	make -C $(MODULE_BASE)/libcdvd/iop
-	cp $(MODULE_BASE)/libcdvd/lib/cdvd.irx .
+	cp $(PS2DEV)/ps2sdk/iop/irx/cdfs.irx .
 
 ps2fs:
 	make -C /usr/ps2dev/ps2fs/iop

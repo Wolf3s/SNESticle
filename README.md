@@ -26,7 +26,7 @@ then proceed to: SNESticle/Project/ps2 and then hit ```make all``` it will gener
 
 # TODO SECTION:
 * [PS2]Remove compiled irx modules and replace by the generated ps2dev ones[HARD].
-* [PS2]Replace libcdvd with PS2DEV libcdvd latest version[MEDIUM].
+* [PS2]Replace libcdvd with PS2DEV libcdvd latest version[MEDIUM](Done).
 * [PS2]Update Makefile to latest PS2SDK version[MEDIUM](Done).
 * [PS2]Remove some implementation GS files and use gsKit instead[MEDIUM].
 * Port C code to C89[Workful].
