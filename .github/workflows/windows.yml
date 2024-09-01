@@ -33,7 +33,7 @@ jobs:
       uses: "actions/upload-artifact@v3"
       with:
           name: "Development Build"
-          files: |
+          path: |
             Release/*.exe
             x64/Release/*.exe
   build:
